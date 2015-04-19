@@ -1,10 +1,10 @@
-# nativescript-TextToSpeech
+# nativescript-texttospeech
 
-A TextToSpeech NativeScript module for Android & iOS
+A texttospeech NativeScript module for Android & iOS
 
 ## Installation
 
-Run `npm install nativescript-TextToSpeech --save` from your project's inner `app` directory:
+Run `npm install nativescript-texttospeech --save` from your project's inner `app` directory:
 
 ```
 .
@@ -16,9 +16,9 @@ Run `npm install nativescript-TextToSpeech --save` from your project's inner `ap
 │   │   ├── main-page.js
 │   │   ├── main-page.xml
 │   │   ├── node_modules
-│   │   │   └── nativescript-TextToSpeech <-- The install will place the module's code here
+│   │   │   └── nativescript-texttospeech <-- The install will place the module's code here
 │   │   │       └── ...
-│   │   └── package.json <----------------- The install will register “nativescript-TextToSpeech as a dependency here
+│   │   └── package.json <----------------- The install will register “nativescript-texttospeech as a dependency here
 │   └── tns_modules
 │       └── ...
 └── platforms
@@ -32,17 +32,17 @@ If npm doesn't end up working for you, you can just copy and paste this repo's t
 
 ## Usage
 
-To use the TextToSpeech module you must first `require()` it from your project's `node_modules` directory:
+To use the texttospeech module you must first `require()` it from your project's `node_modules` directory:
 
 ```js
-var tts = require( "./node_modules/nativescript-TextToSpeech/texttospeech" );
+var tts = require( "./node_modules/nativescript-texttospeech/texttospeech" );
 ```
 
 After you have a reference to the module you can then call its `speak(text, queue, pitch, speakRate, volume)` method.
 
 ```js
 // my-page.js
-var tts = require( "/path/to/node_modules/nativescript-TextToSpeech/texttospeech" );
+var tts = require( "/path/to/node_modules/nativescript-texttospeech/texttospeech" );
 tts.speak("Sample text to be spoken", true, 1.0, 1.0, 1.0);
 ```
 

@@ -1,11 +1,11 @@
 {
-  "name": "nativescript-TextToSpeech",
+  "name": "nativescript-texttospeech",
   "version": "1.0.0",
-  "description": "A TextToSpeech NativeScript module for Android and iOS",
+  "description": "A texttospeech NativeScript module for Android and iOS",
   "main": "texttospeech.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/anarchicknight/nativescript-TextToSpeech.git"
+    "url": "https://github.com/anarchicknight/nativescript-texttospeech.git"
   },
   "keywords": [
     "NativeScript"
@@ -13,10 +13,10 @@
   "author": "Anarchic Knight <anarchicknight@gmail.com> (http://www.anarchicknight.co.uk)",
   "license": {
     "type": "MIT",
-    "url": "https://github.com/anarchicknight/nativescript-TextToSpeech/blob/master/LICENSE"
+    "url": "https://github.com/anarchicknight/nativescript-texttospeech/blob/master/LICENSE"
   },
   "bugs": {
-    "url": "https://github.com/anarchicknight/nativescript-TextToSpeech/issues"
+    "url": "https://github.com/anarchicknight/nativescript-texttospeech/issues"
   },
-  "homepage": "https://github.com/anarchicknight/nativescript-TextToSpeech"
+  "homepage": "https://github.com/anarchicknight/nativescript-texttospeech"
 }

@@ -1,3 +1,4 @@
 .DS_Store
 TextToSpeechDemo/lib/
 TextToSpeechDemo/platforms/
+npm-debug.log
