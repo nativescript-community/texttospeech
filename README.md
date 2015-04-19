@@ -79,7 +79,7 @@ This means that if you only want to supply some arguments which are not necessar
 tts.speak("Sample text to be spoken", null, null, 0.75, null);
 ```
 
-For any arguments not given an explicit value the following defaults are used:
+For any arguments not given an explicit value the following defaults are used:  
 queue = false  
 pitch = 1.0  
 speakRate = 1.0  
