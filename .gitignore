@@ -1,4 +1,4 @@
 .DS_Store
-TextToSpeechDemo/lib/
-TextToSpeechDemo/platforms/
+TTSDemo/lib/
+TTSDemo/platforms/
 npm-debug.log

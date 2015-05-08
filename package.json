@@ -1,6 +1,6 @@
 {
   "name": "nativescript-texttospeech",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A texttospeech NativeScript module for Android and iOS",
   "main": "texttospeech.js",
   "repository": {
@@ -18,5 +18,6 @@
   "bugs": {
     "url": "https://github.com/anarchicknight/nativescript-texttospeech/issues"
   },
-  "homepage": "https://github.com/anarchicknight/nativescript-texttospeech"
+  "homepage": "https://github.com/anarchicknight/nativescript-texttospeech",
+  "dependencies": {}
 }

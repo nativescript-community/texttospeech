@@ -1,28 +1,29 @@
-## This repo has not yet been updated to work with the latest Nativescript release 1.0.0
-
 # nativescript-texttospeech
 
 A texttospeech NativeScript module for Android & iOS
 
 ## Installation
 
-Run `npm install nativescript-texttospeech --save` from your project's inner `app` directory:
+This is based off the project structure in the latest NativeScript release 1.0.0
+
+Run `npm install nativescript-texttospeech --save` from your project's `app` directory:
 
 ```
 .
-├── app
-│   ├── app <------------------------------ run npm install from here
-│   │   ├── app.css
-│   │   ├── app.js
-│   │   ├── bootstrap.js
-│   │   ├── main-page.js
-│   │   ├── main-page.xml
-│   │   ├── node_modules
-│   │   │   └── nativescript-texttospeech <-- The install will place the module's code here
-│   │   │       └── ...
-│   │   └── package.json <----------------- The install will register “nativescript-texttospeech as a dependency here
-│   └── tns_modules
-│       └── ...
+├── app <------------------------------ run npm install from here
+│   ├── App_Resources
+│   │   └── ...
+│   ├── tns_modules
+│   │   └── ...
+│   ├── app.css
+│   ├── app.js
+│   ├── main-page.js
+│   ├── main-page.xml
+│   ├── main-view-model.js
+│   ├── node_modules
+│   │   └── nativescript-texttospeech <-- The install will place the module's code here
+│   │       └── ...
+│   └── package.json <----------------- The install will register “nativescript-texttospeech as a dependency here
 └── platforms
     ├── android
     └── ios
