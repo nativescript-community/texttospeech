@@ -52,7 +52,7 @@ tts.speak("Sample text to be spoken", true, 1.0, 1.0, 1.0);
 A sample project is included with the repo (does not include the nativescript platforms folder). In order to use it perform the following actions:
 
 * Check out repo
-* Switch to the TextToSpeechDemo folder on your command line
+* Switch to the TTSDemo folder on your command line
 * Add the platforms that you wish to use (tns platform add {android or ios})
 * You should now be able to run the sample as usual (tns run {android or ios})
 
