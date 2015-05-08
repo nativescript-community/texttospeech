@@ -70,7 +70,7 @@ var speakText = function(text, queue, pitch, speakRate, volume) {
 	}
 
 	var hashMap = new java.util.HashMap();
-	hashMap.put(TextToSpeech.Engine.KEY_PARAM_VOLUME, volume.toString());
+	hashMap.put(tts.Engine.KEY_PARAM_VOLUME, volume.toString());
 
 	tts.setPitch(pitch);
 	tts.setSpeechRate(speakRate);
