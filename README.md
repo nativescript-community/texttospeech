@@ -1,3 +1,5 @@
+## New plugin architecture currently not working - ticket open with nativescript to see what I have done wrong
+
 # nativescript-texttospeech
 
 A texttospeech NativeScript plugin for Android & iOS
