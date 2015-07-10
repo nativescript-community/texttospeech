@@ -1,59 +1,39 @@
 # nativescript-texttospeech
 
-A texttospeech NativeScript module for Android & iOS
+A texttospeech NativeScript plugin for Android & iOS
 
 ## Installation
 
-This is based off the project structure in the latest NativeScript release 1.0.0
-
-Run `npm install nativescript-texttospeech --save` from your project's `app` directory:
+Run the following command from the root of your project:
 
 ```
-.
-├── app <------------------------------ run npm install from here
-│   ├── App_Resources
-│   │   └── ...
-│   ├── tns_modules
-│   │   └── ...
-│   ├── app.css
-│   ├── app.js
-│   ├── main-page.js
-│   ├── main-page.xml
-│   ├── main-view-model.js
-│   ├── node_modules
-│   │   └── nativescript-texttospeech <-- The install will place the module's code here
-│   │       └── ...
-│   └── package.json <----------------- The install will register “nativescript-texttospeech as a dependency here
-└── platforms
-    ├── android
-    └── ios
+$ tns plugin add nativescript-texttospeech
 ```
 
-As is, using npm within NativeScript is still experimental, so it's possible that you'll run into some issues. A more complete solution is in the works, and you can check out [this issue](https://github.com/NativeScript/nativescript-cli/issues/362) for an update on its progress and to offer feedback.
-
-If npm doesn't end up working for you, you can just copy and paste this repo's texttospeech.android.js and texttospeech.ios.js files into your app and reference them directly.
+This command automatically installs the necessary files, as well as stores nativescript-texttospeech as a dependency in your project's package.json file.
 
 ## Usage
 
-To use the texttospeech module you must first `require()` it from your project's `node_modules` directory:
+To use the texttospeech module you must first `require()` it:
 
 ```js
-var tts = require( "./node_modules/nativescript-texttospeech/texttospeech" );
+var tts = require("nativescript-texttospeech");
 ```
 
 After you have a reference to the module you can then call its `speak(text, queue, pitch, speakRate, volume)` method.
 
 ```js
 // my-page.js
-var tts = require( "/path/to/node_modules/nativescript-texttospeech/texttospeech" );
+var tts = require("nativescript-texttospeech");
 tts.speak("Sample text to be spoken", true, 1.0, 1.0, 1.0);
 ```
 
 A sample project is included with the repo (does not include the nativescript platforms folder). In order to use it perform the following actions:
 
 * Check out repo
-* Switch to the TTSDemo folder on your command line
+* Switch to the demo folder on your command line
 * Add the platforms that you wish to use (tns platform add {android or ios})
+* run npm install
 * You should now be able to run the sample as usual (tns run {android or ios})
 
 ## Notes

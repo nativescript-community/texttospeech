@@ -1,4 +1,5 @@
 .DS_Store
-TTSDemo/lib/
-TTSDemo/platforms/
+demo/lib/
+demo/platforms/
+demo/node_modules
 npm-debug.log
