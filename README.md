@@ -22,12 +22,12 @@ To use the texttospeech module you must first `require()` it:
 var tts = require("nativescript-texttospeech");
 ```
 
-After you have a reference to the module you can then call its `speak(text, queue, pitch, speakRate, volume)` method.
+After you have a reference to the module you can then call its `speak(text, queue, pitch, speakRate, volume, language)` method.
 
 ```js
 // my-page.js
 var tts = require("nativescript-texttospeech");
-tts.speak("Sample text to be spoken", true, 1.0, 1.0, 1.0);
+tts.speak("Sample text to be spoken", true, 1.0, 1.0, 1.0, "en-GB");
 ```
 
 ### Notes
@@ -41,7 +41,7 @@ tts.speak("Sample text to be spoken");
 but the following will not call the `speak()` method:
 
 ```js
-tts.speak(true, 1.0, 1.0, 1.0);
+tts.speak(true, 1.0, 1.0, 1.0, "en-GB");
 ```
 
 If more than one argument is supplied then they are applied from left to right. For example, the following will also run with no issues and will set values for `text`, `queue` and `pitch`:
@@ -53,14 +53,17 @@ tts.speak("Sample text to be spoken", true, 1.0);
 This means that if you only want to supply some arguments which are not necessarily in order from left to right (e.g. `text` and `speakRate`), you need to supply all arguments, even if you have to set some of them to `null` (or `undefined`). For example:
 
 ```js
-tts.speak("Sample text to be spoken", null, null, 0.75, null);
+tts.speak("Sample text to be spoken", null, null, 0.75, null, null);
 ```
 
 For any arguments not given an explicit value the following defaults are used:  
 `queue = false`  
 `pitch = 1.0`  
 `speakRate = 1.0`  
-`volume = 1.0`
+`volume = 1.0` 
+`language = default system language`
+
+If you wish to set a custom language, you need to provide a valid ISO 639-1 language code, e.g. `en-US`. The plugin checks whether the supplied langauge code has the correct syntax but will not prevent setting a nonexistent language code. Please use this feature with caution.
 
 ## Credits
 
