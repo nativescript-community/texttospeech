@@ -1,7 +1,7 @@
 var speechSynthesizer;
 
 var text_to_speech = {
-	speak : function(text, queue, pitch, speakRate, volume) {
+	speak : function(text, queue, pitch, speakRate, volume, language) {
 		if(!speechSynthesizer) {
 			speechSynthesizer = AVSpeechSynthesizer.alloc().init();
 		}
@@ -38,6 +38,10 @@ var text_to_speech = {
 
 		var speechUtterance = AVSpeechUtterance.alloc().initWithString(text);
 
+		if (isString(language) && isValidLocale(language)) {
+			speechUtterance.voice = AVSpeechSynthesisVoice.voiceWithLanguage(language);
+		}
+
 		speechUtterance.pitchMultiplier = pitch;
 		speechUtterance.volume = volume;
 		speechUtterance.rate = speakRate;
@@ -65,5 +69,11 @@ var isBoolean = function (elem) {
 var isNumber = function (elem) {
 	return Object.prototype.toString.call(elem).slice(8, -1) === 'Number';
 };
+
+// helper function to test whether language code has valid syntax
+var isValidLocale = function(locale) {
+	var re = new RegExp("\\w\\w-\\w\\w");
+	return re.test(locale);
+}
 
 module.exports = text_to_speech;
