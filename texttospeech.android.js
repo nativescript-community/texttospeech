@@ -2,10 +2,64 @@ var appModule = require("application");
 var TextToSpeech = android.speech.tts.TextToSpeech;
 var Locale = java.util.Locale;
 var initialised = false;
+var upsInitialised = false;
 var tts;
+var lastOptions;
+var UtteranceProgressListener = android.speech.tts.UtteranceProgressListener.extend({
+        //constructor
+        init: function() {
+            constructorCalled = true;
+            //console.log("UtteranceProgressListener created!");
+        },
+		onStart:function(utteranceId){
+			//console.log("Started speaking");
+		},
+		onError:function(utteranceId){
+			//console.log("Error while speaking");
+		},
+		onDone:function(utteranceId){
+			//console.log("Finished speaking");
+            if (lastOptions.callbackOnFinish){
+                //console.log("Calling the callback");
+                lastOptions.callbackOnFinish();
+            }
+		}
+});
+
+function getSpeechSynthesizer(){
+    	if(!tts || !initialised) {
+			tts = new TextToSpeech(_getContext(), new TextToSpeech.OnInitListener({
+				onInit : function(status) {
+					if(status === TextToSpeech.SUCCESS) {
+						initialised = true;
+                         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) { 
+                            //Add the progress listener
+                            //console.log("Attaching listener...");
+                            tts.setOnUtteranceProgressListener( new UtteranceProgressListener());
+                            //console.log("listener attached...");
+                         } else {
+                             //Don't care on previous version of Android, because it's not supported
+                         }
+                          upsInitialised = true;
+					}
+				}
+			}));
+		}
+        return tts;
+}
 
 var text_to_speech = {
-	speak : function(text, queue, pitch, speakRate, volume, language){
+	speak : function(text, queue, pitch, speakRate, volume, language, callbackOnFinish){
+        lastOptions = {
+            text:text,
+            queue:queue,
+            pitch:pitch,
+            speakRate:speakRate,
+            volume:volume,
+            language:language,
+            callbackOnFinish:callbackOnFinish
+        }
+        getSpeechSynthesizer();
 		if(!isString(text)) {
 			console.log("no text was provided");
 			return;
@@ -15,20 +69,36 @@ var text_to_speech = {
 			console.log("text cannot be greater than 4000 characters");
 			return;
 		}
+        //Speak text if tts initialised
+        if (!initialised || !upsInitialised){
+            this._speakWhenReady();
+        } else {
+            speakText(text, queue, pitch, speakRate, volume, language);
+        }
+	},
+    pause: function(now){
+		getSpeechSynthesizer().stop();
+	},
+	resume:function(){
+        //In Android there's no pause so we resume playng the last phrase...
+        this.speak(lastOptions.text, lastOptions.queue, lastOptions.pitch, 
+            lastOptions.speakRate, lastOptions.volume, lastOptions.language, 
+            lastOptions.callbackOnFinish);
+	},
+    _speakWhenReady:function(){
+            setTimeout(()=>{
+                if (!initialised || !upsInitialised){
+                    //Wait a little while...
+                    this._speakWhenReady();
+                } else {
+                    //Speak using saved last Options
+                     this.speak(lastOptions.text, lastOptions.queue, lastOptions.pitch, 
+                        lastOptions.speakRate, lastOptions.volume, lastOptions.language, 
+                        lastOptions.callbackOnFinish);
+                }
+            }, 200);
 
-		if(!tts || !initialised) {
-			tts = new TextToSpeech(_getContext(), new TextToSpeech.OnInitListener({
-				onInit : function(status) {
-					if(status === TextToSpeech.SUCCESS) {
-						initialised = true;
-						speakText(text, queue, pitch, speakRate, volume, language);
-					}
-				}
-			}));
-		} else {
-			speakText(text, queue, pitch, speakRate, volume, language);
-		}
-	}
+    }
 };
 
 var isString = function (elem) {
@@ -76,15 +146,23 @@ var speakText = function(text, queue, pitch, speakRate, volume, language) {
 		volume = 0.0;
 	}
 
-	var hashMap = new java.util.HashMap();
-	hashMap.put(tts.Engine.KEY_PARAM_VOLUME, volume.toString());
-
 	tts.setPitch(pitch);
 	tts.setSpeechRate(speakRate);
 
-	var queueMode = queue ? TextToSpeech.QUEUE_ADD : TextToSpeech.QUEUE_FLUSH;
-
-	tts.speak(text, queueMode, hashMap);
+    var queueMode = queue ? TextToSpeech.QUEUE_ADD : TextToSpeech.QUEUE_FLUSH;
+    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) { 
+             //Supported version since API 21
+                var params = new android.os.Bundle();
+                params.putString(tts.Engine.KEY_PARAM_VOLUME, volume.toString());
+               // params.putString(tts.Engine.KEY_PARAM_UTTERANCE_ID, "");
+                tts.speak(text, queueMode, params, "UniqueID");
+             }
+        else {
+            //Previous supported version
+            var hashMap = new java.util.HashMap();
+            hashMap.put(tts.Engine.KEY_PARAM_VOLUME, volume.toString());
+            tts.speak(text, queueMode, hashMap);
+            }
 };
 
 // helper function to get current app context 

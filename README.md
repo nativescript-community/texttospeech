@@ -22,13 +22,31 @@ To use the texttospeech module you must first `require()` it:
 var tts = require("nativescript-texttospeech");
 ```
 
-After you have a reference to the module you can then call its `speak(text, queue, pitch, speakRate, volume, language)` method.
+After you have a reference to the module you can then call its `speak(text, queue, pitch, speakRate, volume, language, callbackOnFinish)` method.
 
 ```js
 // my-page.js
 var tts = require("nativescript-texttospeech");
 tts.speak("Sample text to be spoken", true, 1.0, 1.0, 1.0, "en-GB");
 ```
+
+If you want to be notified when the speech is ended you can pass a function without params after the language identifier.
+
+The callback is supported in both iOS and Android (API version >=21).
+
+Other supported methods are:
+
+```
+tts.pause(); 
+```
+It will stop playing the current speech.
+In iOS an optional boolean parameter is supported: if it's true the pause will take effect immediately, otherwise (the default) it will stop after completing the current spoken word.
+
+```
+tts.resume(); 
+```
+It will continue to play current speech in iOS while on Android, due to platform limitations, will replay the text from start.
+
 
 ### Notes
 
