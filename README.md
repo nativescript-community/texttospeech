@@ -27,10 +27,10 @@ After you have a reference to the module you can then call its `speak(text, queu
 ```js
 // my-page.js
 var tts = require("nativescript-texttospeech");
-tts.speak("Sample text to be spoken", true, 1.0, 1.0, 1.0, "en-GB");
+tts.speak("Sample text to be spoken", true, 1.0, 1.0, 1.0, "en-GB", this.onFinishSpeaking.bind(this));
 ```
 
-If you want to be notified when the speech is ended you can pass a function without params after the language identifier.
+If you want to be notified when the speech has ended you can pass a function without params after the language identifier.
 
 The callback is supported in both iOS and Android (API version >=21).
 
