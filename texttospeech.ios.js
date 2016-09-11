@@ -1,11 +1,49 @@
-var speechSynthesizer;
 
-var text_to_speech = {
-	speak : function(text, queue, pitch, speakRate, volume, language) {
+var finishedCallback;
+var Delegate = NSObject.extend({
+	speechSynthesizerDidStartSpeechUtterance:function (synthesizer, utterance){
+		//console.log("Started speaking");
+	},
+	speechSynthesizerDidFinishSpeechUtterance:function(synthesizer, utterance){
+		//console.log("Finished speaking");
+		if (finishedCallback){
+			finishedCallback();
+		}
+		
+	},
+	speechSynthesizerDidPauseSpeechUtterance:function(synthesizer, utterance){
+		//console.log("Paused speaking");
+	},
+	speechSynthesizerDidContinueSpeechUtterance:function(synthesizer, utterance){
+		//console.log("Continued speaking");
+	},
+	speechSynthesizerDidCancelSpeechUtterance:function(synthesizer, utterance){
+		//console.log("Cancelled speaking");
+	}
+	}, {
+    // The name for the registered Objective-C class.
+    name: "MySpeechDelegate",
+    // Declare that the native Objective-C class will implement the AVSpeechSynthesizerDelegate Objective-C protocol.
+    protocols: [AVSpeechSynthesizerDelegate]
+});
+
+var speechSynthesizer;
+var delegate;
+
+
+function getSpeechSynthesizer(){
 		if(!speechSynthesizer) {
 			speechSynthesizer = AVSpeechSynthesizer.alloc().init();
+			speechSynthesizer.delegate = new Delegate();
 		}
+		return speechSynthesizer;
+}
 
+var text_to_speech = {
+	speak : function(text, queue, pitch, speakRate, volume, language, callbackOnFinish) {
+		getSpeechSynthesizer();
+		//Set a finish callback
+		finishedCallback = callbackOnFinish;
 		if(!isString(text)) {
 			console.log("no text was provided");
 			return;
@@ -22,7 +60,7 @@ var text_to_speech = {
 
 		// valid values are AVSpeechUtteranceMinimumSpeechRate to AVSpeechUtteranceMaximumSpeechRate
 		if(!isNumber(speakRate)) {
-			speakRate = AVSpeechUtterance.AVSpeechUtteranceMaximumSpeechRate / 4.0; // default rate is way too fast
+			speakRate = 0.5;//AVSpeechUtterance.AVSpeechUtteranceMaximumSpeechRate / 4.0; // default rate is way too fast
 		} else if(speakRate < AVSpeechUtterance.AVSpeechUtteranceMinimumSpeechRate) {
 			speakRate = AVSpeechUtterance.AVSpeechUtteranceMinimumSpeechRate;
 		} else if(speakRate > AVSpeechUtterance.AVSpeechUtteranceMaximumSpeechRate) {
@@ -53,9 +91,15 @@ var text_to_speech = {
 		if(!queue && speechSynthesizer.speaking) {
 			speechSynthesizer.stopSpeakingAtBoundary(AVSpeechBoundary.AVSpeechBoundaryImmediate);
 		}
-
 		speechSynthesizer.speakUtterance(speechUtterance);
-	}
+	},
+	pause: function(now){
+		getSpeechSynthesizer().pauseSpeakingAtBoundary(now ? AVSpeechBoundary.AVSpeechBoundaryImmediate : AVSpeechBoundary.AVSpeechBoundaryWord);
+	},
+	resume:function(){
+		getSpeechSynthesizer().continueSpeaking();
+	},
+
 };
 
 var isString = function (elem) {
@@ -75,5 +119,6 @@ var isValidLocale = function(locale) {
 	var re = new RegExp("\\w\\w-\\w\\w");
 	return re.test(locale);
 }
+
 
 module.exports = text_to_speech;
