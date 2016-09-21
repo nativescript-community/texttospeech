@@ -12,8 +12,6 @@ $ tns plugin add nativescript-texttospeech
 
 This command automatically installs the necessary files, as well as stores nativescript-texttospeech as a dependency in your project's package.json file.
 
-Due to a current open issue with NativeScript, [#669](https://github.com/NativeScript/nativescript-cli/issues/669), the plugin needs to be added before adding any platforms with the `tns add platform` command.
-
 ## Usage
 
 To use the texttospeech module you must first `require()` it:
