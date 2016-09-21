@@ -28,6 +28,11 @@ After you have a reference to the module you can then call its `speak(text, queu
 // my-page.js
 var tts = require("nativescript-texttospeech");
 tts.speak("Sample text to be spoken", true, 1.0, 1.0, 1.0, "en-GB");
+
+// TypeScript imports
+import * as TNSSpeech from 'nativescript-texttospeech';
+// or
+import { speak } from 'nativescript-texttospeech';
 ```
 
 ### Notes
@@ -57,11 +62,11 @@ tts.speak("Sample text to be spoken", null, null, 0.75, null, null);
 ```
 
 For any arguments not given an explicit value the following defaults are used:  
-`queue = false`  
-`pitch = 1.0`  
-`speakRate = 1.0`  
-`volume = 1.0` 
-`language = default system language`
+- `queue = false`  
+- `pitch = 1.0`  
+- `speakRate = 1.0`  
+- `volume = 1.0` 
+- `language = default system language`
 
 If you wish to set a custom language, you need to provide a valid ISO 639-1 language code, e.g. `en-US`. The plugin checks whether the supplied langauge code has the correct syntax but will not prevent setting a nonexistent language code. Please use this feature with caution.
 
