@@ -48,7 +48,10 @@ TTS.speak(speakOptions);
 
 #### API
 
-- `speak(options: SpeakOptions)`
+- `speak(options: SpeakOptions)` - start speaking with the given options
+- `pause()` - pause the speech
+- `resume()` - resume the speech
+- `destroy()` - release resources for the speech synthesizer/engine
 
 - `SpeakOptions = {}`
     - `text: string` ** required **
