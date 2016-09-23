@@ -1,79 +1,67 @@
+"use strict";
 var speechSynthesizer;
-
-var text_to_speech = {
-	speak : function(text, queue, pitch, speakRate, volume, language) {
-		if(!speechSynthesizer) {
-			speechSynthesizer = AVSpeechSynthesizer.alloc().init();
-		}
-
-		if(!isString(text)) {
-			console.log("no text was provided");
-			return;
-		}
-		
-		// valid values for pitch are 0.5 to 2.0
-		if(!isNumber(pitch)) {
-			pitch = 1.0;
-		} else if(pitch < 0.5) {
-			pitch = 0.5;
-		} else if(pitch > 2.0) {
-			pitch = 2.0;
-		}
-
-		// valid values are AVSpeechUtteranceMinimumSpeechRate to AVSpeechUtteranceMaximumSpeechRate
-		if(!isNumber(speakRate)) {
-			speakRate = AVSpeechUtterance.AVSpeechUtteranceMaximumSpeechRate / 4.0; // default rate is way too fast
-		} else if(speakRate < AVSpeechUtterance.AVSpeechUtteranceMinimumSpeechRate) {
-			speakRate = AVSpeechUtterance.AVSpeechUtteranceMinimumSpeechRate;
-		} else if(speakRate > AVSpeechUtterance.AVSpeechUtteranceMaximumSpeechRate) {
-			speakRate = AVSpeechUtterance.AVSpeechUtteranceMaximumSpeechRate;
-		}
-
-		// valid values for volume are 0.0 to 1.0
-		if(!isNumber(volume) || volume > 1.0) {
-			volume = 1.0;
-		} else if(volume < 0.0) {
-			volume = 0.0;
-		}
-
-		var speechUtterance = AVSpeechUtterance.alloc().initWithString(text);
-
-		if (isString(language) && isValidLocale(language)) {
-			speechUtterance.voice = AVSpeechSynthesisVoice.voiceWithLanguage(language);
-		}
-
-		speechUtterance.pitchMultiplier = pitch;
-		speechUtterance.volume = volume;
-		speechUtterance.rate = speakRate;
-
-		if(!isBoolean(queue)) {
-			queue = false;
-		}
-
-		if(!queue && speechSynthesizer.speaking) {
-			speechSynthesizer.stopSpeakingAtBoundary(AVSpeechBoundary.AVSpeechBoundaryImmediate);
-		}
-
-		speechSynthesizer.speakUtterance(speechUtterance);
-	}
-};
-
-var isString = function (elem) {
-	return Object.prototype.toString.call(elem).slice(8, -1) === 'String';
-};
-
-var isBoolean = function (elem) {
-	return Object.prototype.toString.call(elem).slice(8, -1) === 'Boolean';
-};
-
-var isNumber = function (elem) {
-	return Object.prototype.toString.call(elem).slice(8, -1) === 'Number';
-};
-
-// helper function to test whether language code has valid syntax
-var isValidLocale = function(locale) {
-	var re = new RegExp("\\w\\w-\\w\\w");
-	return re.test(locale);
+function speak(options) {
+    if (!speechSynthesizer) {
+        speechSynthesizer = AVSpeechSynthesizer.alloc().init();
+    }
+    if (!isString(options.text)) {
+        console.log("Text is required to speak.");
+        return;
+    }
+    if (!isNumber(options.pitch)) {
+        options.pitch = 1.0;
+    }
+    else if (options.pitch < 0.5) {
+        options.pitch = 0.5;
+    }
+    else if (options.pitch > 2.0) {
+        options.pitch = 2.0;
+    }
+    if (!isNumber(options.speakRate)) {
+        options.speakRate = AVSpeechUtterance.AVSpeechUtteranceMaximumSpeechRate / 4.0;
+    }
+    else if (options.speakRate < AVSpeechUtterance.AVSpeechUtteranceMinimumSpeechRate) {
+        options.speakRate = AVSpeechUtterance.AVSpeechUtteranceMinimumSpeechRate;
+    }
+    else if (options.speakRate > AVSpeechUtterance.AVSpeechUtteranceMaximumSpeechRate) {
+        options.speakRate = AVSpeechUtterance.AVSpeechUtteranceMaximumSpeechRate;
+    }
+    if (!isNumber(options.volume) || options.volume > 1.0) {
+        options.volume = 1.0;
+    }
+    else if (options.volume < 0.0) {
+        options.volume = 0.0;
+    }
+    var speechUtterance = AVSpeechUtterance.alloc().initWithString(options.text);
+    if (isString(options.language) && isValidLocale(options.language)) {
+        speechUtterance.voice = AVSpeechSynthesisVoice.voiceWithLanguage(options.language);
+    }
+    speechUtterance.pitchMultiplier = options.pitch;
+    speechUtterance.volume = options.volume;
+    speechUtterance.rate = options.speakRate;
+    if (!isBoolean(options.queue)) {
+        options.queue = false;
+    }
+    if (!options.queue && speechSynthesizer.speaking) {
+        speechSynthesizer.stopSpeakingAtBoundary(AVSpeechBoundary.AVSpeechBoundaryImmediate);
+    }
+    speechSynthesizer.speakUtterance(speechUtterance);
 }
-
-module.exports = text_to_speech;
+exports.speak = speak;
+function isString(elem) {
+    return Object.prototype.toString.call(elem).slice(8, -1) === 'String';
+}
+;
+function isBoolean(elem) {
+    return Object.prototype.toString.call(elem).slice(8, -1) === 'Boolean';
+}
+;
+function isNumber(elem) {
+    return Object.prototype.toString.call(elem).slice(8, -1) === 'Number';
+}
+;
+function isValidLocale(locale) {
+    var re = new RegExp("\\w\\w-\\w\\w");
+    return re.test(locale);
+}
+//# sourceMappingURL=texttospeech.ios.js.map

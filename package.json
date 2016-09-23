@@ -8,15 +8,21 @@
     "platforms": {
       "ios": "1.1.2",
       "android": "1.1.0"
+    },
+    "tns-ios": {
+      "version": "2.3.0"
     }
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/anarchicknight/nativescript-texttospeech.git"
+    "url": "https://github.com/bradmartin/nativescript-texttospeech.git"
   },
   "keywords": [
     "NativeScript",
-    "Text To Speech"
+    "Text To Speech",
+    "Android",
+    "iOS",
+    "JavaScript"
   ],
   "author": "Anarchic Knight <anarchicknight@gmail.com> (http://www.anarchicknight.co.uk)",
   "contributors": [
@@ -28,10 +34,15 @@
   ],
   "license": {
     "type": "MIT",
-    "url": "https://github.com/anarchicknight/nativescript-texttospeech/blob/master/LICENSE"
+    "url": "https://github.com/bradmartin/nativescript-texttospeech/blob/master/LICENSE"
   },
   "bugs": {
-    "url": "https://github.com/anarchicknight/nativescript-texttospeech/issues"
+    "url": "https://github.com/bradmartin/nativescript-texttospeech/issues"
   },
-  "homepage": "https://github.com/anarchicknight/nativescript-texttospeech"
+  "homepage": "https://github.com/bradmartin/nativescript-texttospeech",
+  "readmeFilename": "README.md",
+  "devDependencies": {
+    "tns-platform-declarations": "^2.0.0",
+    "typescript": "^1.8.10"
+  }
 }

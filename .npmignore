@@ -9,3 +9,4 @@ screens/
 *.ts
 !index.d.ts
 README.md
+tsconfig.json

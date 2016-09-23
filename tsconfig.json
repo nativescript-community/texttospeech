@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "module": "commonjs",
+        "removeComments": true,
+        "experimentalDecorators": true,
+        "sourceMap": true,
+        "noEmitOnError": false,
+        "noEmitHelpers": true
+    },
+    "files": [
+        "demo/node_modules/tns-core-modules/tns-core-modules.d.ts",
+        "demo/node_modules/tns-platform-declarations/tns-core-modules/android17.d.ts",
+        "demo/node_modules/tns-platform-declarations/tns-core-modules/ios.d.ts",
+        "demo/node_modules/tns-platform-declarations/tns-core-modules/org.nativescript.widgets.d.ts",
+        "texttospeech.android.ts",
+        "texttospeech.ios.ts"
+    ],
+    "compileOnSave": false
+}
