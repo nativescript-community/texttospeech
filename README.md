@@ -1,6 +1,6 @@
 # nativescript-texttospeech
 
-A texttospeech NativeScript plugin for Android & iOS
+A Text to Speech NativeScript plugin for Android & iOS
 
 ## Installation
 
@@ -14,49 +14,28 @@ This command automatically installs the necessary files, as well as stores nativ
 
 ## Usage
 
-To use the texttospeech module you must first `require()` it:
-
 ```js
-var tts = require("nativescript-texttospeech");
-```
+/// javascript
+var TextToSpeech = require("nativescript-texttospeech");
 
-After you have a reference to the module you can then call its `speak(text, queue, pitch, speakRate, volume, language)` method.
 
-```js
-// my-page.js
-var tts = require("nativescript-texttospeech");
-tts.speak("Sample text to be spoken", true, 1.0, 1.0, 1.0, "en-GB");
-
-// TypeScript imports
-import * as TNSSpeech from 'nativescript-texttospeech';
+/// TypeScript
+import * as TextToSpeech from 'nativescript-texttospeech';
 // or
-import { speak } from 'nativescript-texttospeech';
-```
+import { speak, SpeakOptions } from 'nativescript-texttospeech';
 
-### Notes
 
-`text` is the only required argument - if it is not supplied the `speak()` method will not be called. For example, the following will run with no issues:
+let speakOptions: SpeakOptions = {
+    text: 'Whatever you like', /// *** required ***
+    speakRate: 0.5 // optional - default is 1.0
+    pitch: 1.0 // optional - default is 1.0
+    volume: 1.0 // optional - default is 1.0
+    language: "en-GB"  // optional - default is system language
+}
 
-```js
-tts.speak("Sample text to be spoken");
-```
+// Call the `speak` method passing the SpeakOptions object
+TextToSpeech.speak(speakOptions);
 
-but the following will not call the `speak()` method:
-
-```js
-tts.speak(true, 1.0, 1.0, 1.0, "en-GB");
-```
-
-If more than one argument is supplied then they are applied from left to right. For example, the following will also run with no issues and will set values for `text`, `queue` and `pitch`:
-
-```js
-tts.speak("Sample text to be spoken", true, 1.0);
-```
-
-This means that if you only want to supply some arguments which are not necessarily in order from left to right (e.g. `text` and `speakRate`), you need to supply all arguments, even if you have to set some of them to `null` (or `undefined`). For example:
-
-```js
-tts.speak("Sample text to be spoken", null, null, 0.75, null, null);
 ```
 
 For any arguments not given an explicit value the following defaults are used:  
@@ -71,3 +50,5 @@ If you wish to set a custom language, you need to provide a valid ISO 639-1 lang
 ## Credits
 
 Inspired by James Montemagno's [TextToSpeech Xamarin plugin](https://github.com/jamesmontemagno/Xamarin.Plugins/tree/master/TextToSpeech)
+
+Thanks to [anarchicknight](https://github.com/anarchicknight) for this plugin.
