@@ -27,21 +27,21 @@ var TextToSpeech = require("nativescript-texttospeech");
 
 
 /// TypeScript
-import * as TextToSpeech from 'nativescript-texttospeech';
-// or
-import { speak, SpeakOptions } from 'nativescript-texttospeech';
+import { TNSTextToSpeech, SpeakOptions } from 'nativescript-texttospeech';
 
+let TTS = new TNSTextToSpeech();
 
 let speakOptions: SpeakOptions = {
     text: 'Whatever you like', /// *** required ***
     speakRate: 0.5 // optional - default is 1.0
     pitch: 1.0 // optional - default is 1.0
     volume: 1.0 // optional - default is 1.0
-    language: "en-GB"  // optional - default is system language
+    language: "en-GB"  // optional - default is system language,
+    finishedCallback: Function // optional
 }
 
 // Call the `speak` method passing the SpeakOptions object
-TextToSpeech.speak(speakOptions);
+TTS.speak(speakOptions);
 
 ```
 
@@ -57,6 +57,7 @@ TextToSpeech.speak(speakOptions);
     - `speakRate?: number = 1.0`  
     - `volume?: number = 1.0` 
     - `language?: string = default system language`
+    - `finishedCallback?: Function`
 
 
 If you wish to set a custom language, you need to provide a valid ISO 639-1 language code, e.g. `en-US`. The plugin checks whether the supplied langauge code has the correct syntax but will not prevent setting a nonexistent language code. Please use this feature with caution.
@@ -66,3 +67,4 @@ If you wish to set a custom language, you need to provide a valid ISO 639-1 lang
 Inspired by James Montemagno's [TextToSpeech Xamarin plugin](https://github.com/jamesmontemagno/Xamarin.Plugins/tree/master/TextToSpeech)
 
 Thanks to [anarchicknight](https://github.com/anarchicknight) for this plugin.
+Thanks to [stefalda](https://github.com/stefalda) for his great work on pause/resume and the finishedCallback events :bomb:
