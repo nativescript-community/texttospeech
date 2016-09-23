@@ -3,5 +3,8 @@
     <StackLayout>
         <Button text="Speak This" tap="{{ speakThis }}"/>
         <TextField hint="Speak this..." text="{{ speakText }}" />
+        <Button text="Destroy Synthesizer" tap="{{ byebyeSynthesizer }}" />
+        <Button text="Pause" tap="{{ pauseSynthesizer }}" />
+        <Button text="Resume" tap="{{ resumeSynthesizer }}" />
     </StackLayout>
 </Page>

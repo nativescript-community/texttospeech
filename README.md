@@ -5,6 +5,10 @@
 
 A Text to Speech NativeScript plugin for Android & iOS
 
+#### Native Controls
+ - Android - [TextToSpeech](https://developer.android.com/reference/android/speech/tts/TextToSpeech.html)
+ - iOS - [AVSpeechSynthesizer](https://developer.apple.com/reference/avfoundation/avspeechsynthesizer)
+
 ## Installation
 
 Run the following command from the root of your project:
