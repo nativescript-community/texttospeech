@@ -1,4 +1,7 @@
-# nativescript-texttospeech
+[![npm](https://img.shields.io/npm/v/nativescript-texttospeech.svg)](https://www.npmjs.com/package/nativescript-texttospeech)
+[![npm](https://img.shields.io/npm/dt/nativescript-texttospeech.svg?label=npm%20downloads)](https://www.npmjs.com/package/nativescript-texttospeech)
+
+# NativeScript-TextToSpeech :loudspeaker:
 
 A Text to Speech NativeScript plugin for Android & iOS
 
@@ -38,12 +41,19 @@ TextToSpeech.speak(speakOptions);
 
 ```
 
-For any arguments not given an explicit value the following defaults are used:  
-- `queue = false`  
-- `pitch = 1.0`  
-- `speakRate = 1.0`  
-- `volume = 1.0` 
-- `language = default system language`
+
+#### API
+
+- `speak(options: SpeakOptions)`
+
+- `SpeakOptions = {}`
+    - `text: string` ** required **
+    - `queue?: boolean = false`  
+    - `pitch?: number = 1.0`  
+    - `speakRate?: number = 1.0`  
+    - `volume?: number = 1.0` 
+    - `language?: string = default system language`
+
 
 If you wish to set a custom language, you need to provide a valid ISO 639-1 language code, e.g. `en-US`. The plugin checks whether the supplied langauge code has the correct syntax but will not prevent setting a nonexistent language code. Please use this feature with caution.
 
