@@ -134,7 +134,7 @@ export class TNSTextToSpeech {
 
 		let queueMode = options.queue ? android.speech.tts.TextToSpeech.QUEUE_ADD : android.speech.tts.TextToSpeech.QUEUE_FLUSH;
 
-		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+		if (android.os.Build.VERSION.SDK_INT >= 21) { // Hardcoded this value since the static field LOLLIPOP doesn't exist in Android 4.4
 			/// >= Android API 21 - https://developer.android.com/reference/android/speech/tts/TextToSpeech.html#speak(java.lang.CharSequence, int, android.os.Bundle, java.lang.String)
 			let params = new android.os.Bundle();
 			params.putString("volume", options.volume.toString());
