@@ -3,7 +3,7 @@
 
 # NativeScript-TextToSpeech :loudspeaker:
 
-A Text to Speech NativeScript plugin for Android & iOS
+A Text to Speech NativeScript plugin for Android & iOS - [Tutorial Video](https://egghead.io/lessons/typescript-using-text-to-speech-with-nativescript)
 
 #### Native Controls
  - Android - [TextToSpeech](https://developer.android.com/reference/android/speech/tts/TextToSpeech.html)
