@@ -3,7 +3,7 @@
 
 # NativeScript-TextToSpeech :loudspeaker:
 
-A Text to Speech NativeScript plugin for Android & iOS - [Tutorial Video](https://egghead.io/lessons/typescript-using-text-to-speech-with-nativescript)
+A Text to Speech NativeScript plugin for Android & iOS
 
 #### Native Controls
  - Android - [TextToSpeech](https://developer.android.com/reference/android/speech/tts/TextToSpeech.html)
@@ -16,11 +16,11 @@ Run the following command from the root of your project:
 ```
 $ tns plugin add nativescript-texttospeech
 ```
+This command automatically installs the necessary files, as well as stores nativescript-texttospeech as a dependency in your project's package.json file.
 
 ## Video Tutorial
 [egghead lesson @ https://egghead.io/lessons/typescript-using-text-to-speech-with-nativescript](https://egghead.io/lessons/typescript-using-text-to-speech-with-nativescript)
 
-This command automatically installs the necessary files, as well as stores nativescript-texttospeech as a dependency in your project's package.json file.
 
 ## Usage
 
