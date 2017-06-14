@@ -17,6 +17,15 @@
     "type": "git",
     "url": "https://github.com/bradmartin/nativescript-texttospeech.git"
   },
+  "scripts": {
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "prettier --write",
+      "git add"
+    ]
+  },
   "keywords": [
     "NativeScript",
     "Text To Speech",
@@ -42,6 +51,9 @@
   "homepage": "https://github.com/bradmartin/nativescript-texttospeech",
   "readmeFilename": "README.md",
   "devDependencies": {
+    "husky": "^0.13.4",
+    "lint-staged": "^3.6.1",
+    "prettier": "^1.4.4",
     "tns-platform-declarations": "^2.0.0",
     "typescript": "^1.8.10"
   }
