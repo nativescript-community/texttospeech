@@ -1,4 +1,4 @@
-import { SpeakOptions } from "./index.d.ts";
+import { SpeakOptions } from "./index.d";
 
 declare var NSObject,
   AVSpeechUtterance,
@@ -46,77 +46,82 @@ class MySpeechDelegate extends NSObject {
 export class TNSTextToSpeech {
   private _speechSynthesizer: any; /// AVSpeechSynthesizer
 
-  public speak(options: SpeakOptions) {
-    if (!this._speechSynthesizer) {
-      this._speechSynthesizer = AVSpeechSynthesizer.alloc().init();
-      this._speechSynthesizer.delegate = new MySpeechDelegate();
-    }
+  public speak(options: SpeakOptions): Promise<any> {
+    return new Promise(function(resolve, reject) {
+      if (!this._speechSynthesizer) {
+        this._speechSynthesizer = AVSpeechSynthesizer.alloc().init();
+        this._speechSynthesizer.delegate = new MySpeechDelegate();
+      }
 
-    if (!this.isString(options.text)) {
-      console.log("Text is required to speak.");
-      return;
-    }
+      if (!this.isString(options.text)) {
+        reject("Text is required to speak.");
+        return;
+      }
 
-    doneCallback = options.finishedCallback;
+      doneCallback = options.finishedCallback;
 
-    // valid values for pitch are 0.5 to 2.0
-    if (!this.isNumber(options.pitch)) {
-      options.pitch = 1.0;
-    } else if (options.pitch < 0.5) {
-      options.pitch = 0.5;
-    } else if (options.pitch > 2.0) {
-      options.pitch = 2.0;
-    }
+      // valid values for pitch are 0.5 to 2.0
+      if (!this.isNumber(options.pitch)) {
+        options.pitch = 1.0;
+      } else if (options.pitch < 0.5) {
+        options.pitch = 0.5;
+      } else if (options.pitch > 2.0) {
+        options.pitch = 2.0;
+      }
 
-    // valid values are AVSpeechUtteranceMinimumSpeechRate to AVSpeechUtteranceMaximumSpeechRate
-    if (!this.isNumber(options.speakRate)) {
-      options.speakRate =
-        AVSpeechUtterance.AVSpeechUtteranceMaximumSpeechRate / 4.0; // default rate is way too fast
-    } else if (
-      options.speakRate < AVSpeechUtterance.AVSpeechUtteranceMinimumSpeechRate
-    ) {
-      options.speakRate = AVSpeechUtterance.AVSpeechUtteranceMinimumSpeechRate;
-    } else if (
-      options.speakRate > AVSpeechUtterance.AVSpeechUtteranceMaximumSpeechRate
-    ) {
-      options.speakRate = AVSpeechUtterance.AVSpeechUtteranceMaximumSpeechRate;
-    }
+      // valid values are AVSpeechUtteranceMinimumSpeechRate to AVSpeechUtteranceMaximumSpeechRate
+      if (!this.isNumber(options.speakRate)) {
+        options.speakRate =
+          AVSpeechUtterance.AVSpeechUtteranceMaximumSpeechRate / 4.0; // default rate is way too fast
+      } else if (
+        options.speakRate < AVSpeechUtterance.AVSpeechUtteranceMinimumSpeechRate
+      ) {
+        options.speakRate =
+          AVSpeechUtterance.AVSpeechUtteranceMinimumSpeechRate;
+      } else if (
+        options.speakRate > AVSpeechUtterance.AVSpeechUtteranceMaximumSpeechRate
+      ) {
+        options.speakRate =
+          AVSpeechUtterance.AVSpeechUtteranceMaximumSpeechRate;
+      }
 
-    // valid values for volume are 0.0 to 1.0
-    if (!this.isNumber(options.volume) || options.volume > 1.0) {
-      options.volume = 1.0;
-    } else if (options.volume < 0.0) {
-      options.volume = 0.0;
-    }
+      // valid values for volume are 0.0 to 1.0
+      if (!this.isNumber(options.volume) || options.volume > 1.0) {
+        options.volume = 1.0;
+      } else if (options.volume < 0.0) {
+        options.volume = 0.0;
+      }
 
-    let speechUtterance = AVSpeechUtterance.alloc().initWithString(
-      options.text
-    );
-
-    if (
-      this.isString(options.language) &&
-      this.isValidLocale(options.language)
-    ) {
-      speechUtterance.voice = AVSpeechSynthesisVoice.voiceWithLanguage(
-        options.language
+      let speechUtterance = AVSpeechUtterance.alloc().initWithString(
+        options.text
       );
-    }
 
-    speechUtterance.pitchMultiplier = options.pitch;
-    speechUtterance.volume = options.volume;
-    speechUtterance.rate = options.speakRate;
+      if (
+        this.isString(options.language) &&
+        this.isValidLocale(options.language)
+      ) {
+        speechUtterance.voice = AVSpeechSynthesisVoice.voiceWithLanguage(
+          options.language
+        );
+      }
 
-    if (!this.isBoolean(options.queue)) {
-      options.queue = false;
-    }
+      speechUtterance.pitchMultiplier = options.pitch;
+      speechUtterance.volume = options.volume;
+      speechUtterance.rate = options.speakRate;
 
-    if (!options.queue && this._speechSynthesizer.speaking) {
-      this._speechSynthesizer.stopSpeakingAtBoundary(
-        AVSpeechBoundary.AVSpeechBoundaryImmediate
-      );
-    }
+      if (!this.isBoolean(options.queue)) {
+        options.queue = false;
+      }
 
-    this._speechSynthesizer.speakUtterance(speechUtterance);
+      if (!options.queue && this._speechSynthesizer.speaking) {
+        this._speechSynthesizer.stopSpeakingAtBoundary(
+          AVSpeechBoundary.AVSpeechBoundaryImmediate
+        );
+      }
+
+      this._speechSynthesizer.speakUtterance(speechUtterance);
+      resolve();
+    });
   }
 
   public pause(now) {
@@ -137,8 +142,8 @@ export class TNSTextToSpeech {
   }
 
   /**
-	 * Private Methods
-	 */
+       * Private Methods
+       */
 
   private isString(elem) {
     return Object.prototype.toString.call(elem).slice(8, -1) === "String";

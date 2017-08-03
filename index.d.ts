@@ -3,7 +3,7 @@ export declare class TNSTextToSpeech {
      * Initiate the text to speech.
      * @param {object} SpeakOptions - SpeakOptions object.
      */
-  speak(options: SpeakOptions): void;
+  speak(options: SpeakOptions): Promise<any>;
 
   /**
      * Release the resources used by the TextToSpeech engine/synthesizer

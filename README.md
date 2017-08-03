@@ -44,17 +44,21 @@ let speakOptions: SpeakOptions = {
 }
 
 // Call the `speak` method passing the SpeakOptions object
-TTS.speak(speakOptions);
+TTS.speak(speakOptions).then(() => {
+    // everything is fine
+}, (err) => {
+    // oops, something went wrong!
+});
 
 ```
 
 
 #### API
 
-- `speak(options: SpeakOptions)` - start speaking with the given options
-- `pause()` - pause the speech
-- `resume()` - resume the speech
-- `destroy()` - release resources for the speech synthesizer/engine
+- `speak(options: SpeakOptions): Promise<any>` - start speaking with the given options
+- `pause(): void` - pause the speech
+- `resume(): void` - resume the speech
+- `destroy(): void` - release resources for the speech synthesizer/engine
 
 - `SpeakOptions = {}`
     - `text: string` ** required **
