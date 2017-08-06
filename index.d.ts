@@ -19,6 +19,11 @@ export declare class TNSTextToSpeech {
      * Resume the engine/synthesizer. On Android it will start from beginning - since there is no actual pause, only stop.
      */
   resume(): void;
+
+  /**
+     * Android only: Returns array of available Languages
+     */
+  getAvailableLanguages(): Promise<Array<Language>>;
 }
 
 export interface SpeakOptions {
@@ -27,6 +32,14 @@ export interface SpeakOptions {
   pitch?: number;
   speakRate?: number;
   volume?: number;
+  locale?: string;
   language?: string;
   finishedCallback?: Function;
+}
+
+export interface Language {
+  language: string;
+  languageDisplay: string;
+  country: string;
+  countryDisplay: string;
 }

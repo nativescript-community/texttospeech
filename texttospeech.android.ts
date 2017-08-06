@@ -1,5 +1,5 @@
 import * as appModule from "application";
-import { SpeakOptions } from "./index.d";
+import { SpeakOptions, Language } from "./index.d";
 
 declare var android, java: any;
 
@@ -63,29 +63,34 @@ export class TNSTextToSpeech {
         return;
       }
 
-      this.init().then(() => {
-        let maxLen: number = 4000; // API level 18 added method for getting value dynamically
-        if (android.os.Build.VERSION.SDK_INT >= 18) {
-          try {
-            maxLen = this._tts.getMaxSpeechInputLength();
-          } catch (error) {
-            //console.log(error);
+      this.init().then(
+        () => {
+          let maxLen: number = 4000; // API level 18 added method for getting value dynamically
+          if (android.os.Build.VERSION.SDK_INT >= 18) {
+            try {
+              maxLen = this._tts.getMaxSpeechInputLength();
+            } catch (error) {
+              //console.log(error);
+            }
           }
+
+          if (options.text.length > maxLen) {
+            reject(
+              "Text cannot be greater than " + maxLen.toString() + " characters"
+            );
+            return;
+          }
+
+          // save a reference to the options passed in for pause/resume methods to use
+          this._lastOptions = options;
+
+          this.speakText(options);
+          resolve();
+        },
+        err => {
+          reject(err);
         }
-
-        if (options.text.length > maxLen) {
-          reject(
-            "Text cannot be greater than " + maxLen.toString() + " characters"
-          );
-          return;
-        }
-
-        // save a reference to the options passed in for pause/resume methods to use
-        this._lastOptions = options;
-
-        this.speakText(options);
-        resolve();
-      });
+      );
     });
   }
 
@@ -117,13 +122,22 @@ export class TNSTextToSpeech {
   }
 
   private speakText(options: SpeakOptions) {
-    if (
-      this.isString(options.language) &&
-      this.isValidLocale(options.language)
-    ) {
-      let languageArray = options.language.split("-");
-      let locale = new Locale(languageArray[0], languageArray[1]);
+    if (this.isString(options.locale) && this.isValidLocale(options.locale)) {
+      let localeArray = options.locale.split("-");
+      let locale = new Locale(localeArray[0], localeArray[1]);
       this._tts.setLanguage(locale);
+    } else if (this.isString(options.language)) {
+      let locale = null;
+      if (this.isValidLocale(options.language)) {
+        // only for backwards compatbility with old API
+        let languageArray = options.language.split("-");
+        locale = new Locale(languageArray[0], languageArray[1]);
+      } else {
+        locale = new Locale(options.language);
+      }
+      if (locale) {
+        this._tts.setLanguage(locale);
+      }
     }
 
     if (!this.isBoolean(options.queue)) {
@@ -170,6 +184,30 @@ export class TNSTextToSpeech {
       hashMap.put("volume", options.volume.toString());
       this._tts.speak(options.text, queueMode, hashMap);
     }
+  }
+
+  public getAvailableLanguages(): Promise<Array<Language>> {
+    return new Promise((resolve, reject) => {
+      let result: Array<Language> = new Array<Language>();
+      this.init().then(
+        () => {
+          var languages = this._tts.getAvailableLanguages().toArray();
+          for (var c = 0; c < languages.length; c++) {
+            let lang: Language = {
+              language: languages[c].getLanguage(),
+              languageDisplay: languages[c].getDisplayLanguage(),
+              country: languages[c].getCountry(),
+              countryDisplay: languages[c].getDisplayCountry()
+            };
+            result.push(lang);
+          }
+          resolve(result);
+        },
+        err => {
+          reject(err);
+        }
+      );
+    });
   }
 
   // helper function to get current app context

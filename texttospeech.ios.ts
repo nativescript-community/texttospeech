@@ -96,7 +96,11 @@ export class TNSTextToSpeech {
         options.text
       );
 
-      if (
+      if (this.isString(options.locale) && this.isValidLocale(options.locale)) {
+        speechUtterance.voice = AVSpeechSynthesisVoice.voiceWithLanguage(
+          options.locale
+        );
+      } else if (
         this.isString(options.language) &&
         this.isValidLocale(options.language)
       ) {
