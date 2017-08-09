@@ -1,5 +1,5 @@
-import * as appModule from "application";
-import { SpeakOptions, Language } from "./index.d";
+import * as appModule from "tns-core-modules/application";
+import { SpeakOptions, Language } from "./index";
 
 declare var android, java: any;
 

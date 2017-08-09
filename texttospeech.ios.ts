@@ -1,4 +1,4 @@
-import { SpeakOptions } from "./index.d";
+import { SpeakOptions } from "./index";
 
 declare var NSObject,
   AVSpeechUtterance,
@@ -146,8 +146,8 @@ export class TNSTextToSpeech {
   }
 
   /**
-       * Private Methods
-       */
+   * Private Methods
+   */
 
   private isString(elem) {
     return Object.prototype.toString.call(elem).slice(8, -1) === "String";

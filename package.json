@@ -1,6 +1,6 @@
 {
   "name": "nativescript-texttospeech",
-  "version": "1.3.2",
+  "version": "2.0.0",
   "description": "A text to speech NativeScript plugin for Android and iOS",
   "main": "texttospeech",
   "typings": "index.d.ts",
@@ -21,10 +21,7 @@
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "*.ts": [
-      "prettier --write",
-      "git add"
-    ]
+    "*.ts": ["prettier --write", "git add"]
   },
   "keywords": [
     "NativeScript",
