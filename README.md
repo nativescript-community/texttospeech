@@ -39,22 +39,26 @@ let speakOptions: SpeakOptions = {
     speakRate: 0.5 // optional - default is 1.0
     pitch: 1.0 // optional - default is 1.0
     volume: 1.0 // optional - default is 1.0
-    language: "en-GB"  // optional - default is system language,
+    locale: "en-GB"  // optional - default is system locale,
     finishedCallback: Function // optional
 }
 
 // Call the `speak` method passing the SpeakOptions object
-TTS.speak(speakOptions);
+TTS.speak(speakOptions).then(() => {
+    // everything is fine
+}, (err) => {
+    // oops, something went wrong!
+});
 
 ```
 
 
 #### API
 
-- `speak(options: SpeakOptions)` - start speaking with the given options
-- `pause()` - pause the speech
-- `resume()` - resume the speech
-- `destroy()` - release resources for the speech synthesizer/engine
+- `speak(options: SpeakOptions): Promise<any>` - start speaking with the given options
+- `pause(): void` - pause the speech
+- `resume(): void` - resume the speech
+- `destroy(): void` - release resources for the speech synthesizer/engine
 
 - `SpeakOptions = {}`
     - `text: string` ** required **
@@ -62,11 +66,36 @@ TTS.speak(speakOptions);
     - `pitch?: number = 1.0`  
     - `speakRate?: number = 1.0`  
     - `volume?: number = 1.0` 
-    - `language?: string = default system language`
+    - `locale?: string = default system locale`
+    - `language?: string = default system language` ** Android only **
     - `finishedCallback?: Function`
 
 
-If you wish to set a custom language, you need to provide a valid ISO 639-1 language code, e.g. `en-US`. The plugin checks whether the supplied langauge code has the correct syntax but will not prevent setting a nonexistent language code. Please use this feature with caution.
+If you wish to set a custom locale, you need to provide a valid BCP-47 code, e.g. `en-US`. If you wish to set only a custom language (without a preferred country code), you need to provide a valid ISO 639-1 language code. If both are set, the custom locale will be used.
+
+The plugin checks whether the supplied locale/language code has the correct syntax but will not prevent setting a nonexistent codes. Please use this feature with caution.
+
+Example with language code only:
+```js
+let speakOptions: SpeakOptions = {
+    text: 'Whatever you like', // *** required ***
+    language: "en"  // english language will be used
+}
+```
+
+Example with locale:
+```js
+let speakOptions: SpeakOptions = {
+    text: 'Whatever you like', // *** required ***
+    locale: "en-AU"  // australian english language will be used
+}
+```
+
+
+### Android Only Methods
+
+- `getAvailableLanguages(): Promise<Array<Language>>;` - returns an array of available languages (use to prevent using non-existing language/local codes)
+
 
 ## Credits
 

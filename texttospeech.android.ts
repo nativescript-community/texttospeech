@@ -1,5 +1,5 @@
 import * as appModule from "application";
-import { SpeakOptions } from "./index.d.ts";
+import { SpeakOptions, Language } from "./index.d";
 
 declare var android, java: any;
 
@@ -28,47 +28,76 @@ export class TNSTextToSpeech {
     }
   );
 
-  public speak(options: SpeakOptions) {
-    if (!this.isString(options.text)) {
-      console.log("Text property is required to speak.");
-      return;
-    }
+  private init(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      if (!this._tts || !this._initialized) {
+        this._tts = new android.speech.tts.TextToSpeech(
+          this._getContext(),
+          new android.speech.tts.TextToSpeech.OnInitListener({
+            onInit: status => {
+              // if the TextToSpeech was successful initializing
+              if (status === android.speech.tts.TextToSpeech.SUCCESS) {
+                this._initialized = true;
 
-    if (options.text.length > 4000) {
-      console.log("Text cannot be greater than 4000 characters");
-      return;
-    }
+                this._tts.setOnUtteranceProgressListener(
+                  new this._utteranceProgressListener()
+                );
 
-    // save a reference to the options passed in for pause/resume methods to use
-    this._lastOptions = options;
+                resolve();
+              } else {
+                reject(status);
+              }
+            }
+          })
+        );
+      } else {
+        resolve();
+      }
+    });
+  }
 
-    if (!this._tts || !this._initialized) {
-      this._tts = new android.speech.tts.TextToSpeech(
-        this._getContext(),
-        new android.speech.tts.TextToSpeech.OnInitListener({
-          onInit: status => {
-            // if the TextToSpeech was successful initializing
-            if (status === android.speech.tts.TextToSpeech.SUCCESS) {
-              this._initialized = true;
+  public speak(options: SpeakOptions): Promise<any> {
+    return new Promise((resolve, reject) => {
+      if (!this.isString(options.text)) {
+        reject("Text property is required to speak.");
+        return;
+      }
 
-              this._tts.setOnUtteranceProgressListener(
-                new this._utteranceProgressListener()
-              );
-
-              this.speakText(options);
+      this.init().then(
+        () => {
+          let maxLen: number = 4000; // API level 18 added method for getting value dynamically
+          if (android.os.Build.VERSION.SDK_INT >= 18) {
+            try {
+              maxLen = this._tts.getMaxSpeechInputLength();
+            } catch (error) {
+              //console.log(error);
             }
           }
-        })
+
+          if (options.text.length > maxLen) {
+            reject(
+              "Text cannot be greater than " + maxLen.toString() + " characters"
+            );
+            return;
+          }
+
+          // save a reference to the options passed in for pause/resume methods to use
+          this._lastOptions = options;
+
+          this.speakText(options);
+          resolve();
+        },
+        err => {
+          reject(err);
+        }
       );
-    } else {
-      this.speakText(options);
-    }
+    });
   }
 
   /**
-	 * Interrupts the current utterance and discards other utterances in the queue.
-	 * https://developer.android.com/reference/android/speech/tts/TextToSpeech.html#stop()
-	 */
+       * Interrupts the current utterance and discards other utterances in the queue.
+       * https://developer.android.com/reference/android/speech/tts/TextToSpeech.html#stop()
+       */
   public pause() {
     if (this._tts && this._initialized) {
       this._tts.stop();
@@ -83,9 +112,9 @@ export class TNSTextToSpeech {
   }
 
   /**
- 	 * Releases the resources used by the TextToSpeech engine.
- 	 * https://developer.android.com/reference/android/speech/tts/TextToSpeech.html#shutdown()
- 	 */
+         * Releases the resources used by the TextToSpeech engine.
+         * https://developer.android.com/reference/android/speech/tts/TextToSpeech.html#shutdown()
+         */
   public destroy() {
     if (this._tts) {
       this._tts.shutdown();
@@ -93,13 +122,22 @@ export class TNSTextToSpeech {
   }
 
   private speakText(options: SpeakOptions) {
-    if (
-      this.isString(options.language) &&
-      this.isValidLocale(options.language)
-    ) {
-      let languageArray = options.language.split("-");
-      let locale = new Locale(languageArray[0], languageArray[1]);
+    if (this.isString(options.locale) && this.isValidLocale(options.locale)) {
+      let localeArray = options.locale.split("-");
+      let locale = new Locale(localeArray[0], localeArray[1]);
       this._tts.setLanguage(locale);
+    } else if (this.isString(options.language)) {
+      let locale = null;
+      if (this.isValidLocale(options.language)) {
+        // only for backwards compatbility with old API
+        let languageArray = options.language.split("-");
+        locale = new Locale(languageArray[0], languageArray[1]);
+      } else {
+        locale = new Locale(options.language);
+      }
+      if (locale) {
+        this._tts.setLanguage(locale);
+      }
     }
 
     if (!this.isBoolean(options.queue)) {
@@ -146,6 +184,30 @@ export class TNSTextToSpeech {
       hashMap.put("volume", options.volume.toString());
       this._tts.speak(options.text, queueMode, hashMap);
     }
+  }
+
+  public getAvailableLanguages(): Promise<Array<Language>> {
+    return new Promise((resolve, reject) => {
+      let result: Array<Language> = new Array<Language>();
+      this.init().then(
+        () => {
+          var languages = this._tts.getAvailableLanguages().toArray();
+          for (var c = 0; c < languages.length; c++) {
+            let lang: Language = {
+              language: languages[c].getLanguage(),
+              languageDisplay: languages[c].getDisplayLanguage(),
+              country: languages[c].getCountry(),
+              countryDisplay: languages[c].getDisplayCountry()
+            };
+            result.push(lang);
+          }
+          resolve(result);
+        },
+        err => {
+          reject(err);
+        }
+      );
+    });
   }
 
   // helper function to get current app context
