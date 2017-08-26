@@ -47,7 +47,7 @@ export class TNSTextToSpeech {
   private _speechSynthesizer: any; /// AVSpeechSynthesizer
 
   public speak(options: SpeakOptions): Promise<any> {
-    return new Promise(function(resolve, reject) {
+    return new Promise((resolve, reject) => {
       if (!this._speechSynthesizer) {
         this._speechSynthesizer = AVSpeechSynthesizer.alloc().init();
         this._speechSynthesizer.delegate = new MySpeechDelegate();
