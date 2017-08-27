@@ -36,10 +36,10 @@ let TTS = new TNSTextToSpeech();
 
 let speakOptions: SpeakOptions = {
     text: 'Whatever you like', /// *** required ***
-    speakRate: 0.5 // optional - default is 1.0
-    pitch: 1.0 // optional - default is 1.0
-    volume: 1.0 // optional - default is 1.0
-    locale: "en-GB"  // optional - default is system locale,
+    speakRate: 0.5, // optional - default is 1.0
+    pitch: 1.0, // optional - default is 1.0
+    volume: 1.0, // optional - default is 1.0
+    locale: "en-GB",  // optional - default is system locale,
     finishedCallback: Function // optional
 }
 
