@@ -1,6 +1,6 @@
 {
   "name": "nativescript-texttospeech",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A text to speech NativeScript plugin for Android and iOS",
   "main": "texttospeech",
   "typings": "index.d.ts",
@@ -34,13 +34,30 @@
   "contributors": [
     {
       "name": "Brad Martin",
-      "email": "bradwaynemartin@gmail.com",
+      "email": "bmartin@nstudio.io",
       "url": "https://github.com/BradMartin"
     },
     {
       "name": "Sven Ziegler",
       "email": "info@sven-ziegler.com",
       "url": "https://github.com/svzi"
+    },
+    {
+      "name": "Eddy Verbruggen",
+      "url": "https://github.com/EddyVerbruggen"
+    },
+    {
+      "name": "Gaper",
+      "url": "https://github.com/apiejh"
+    },
+    {
+      "name": "Josh Sommer",
+      "url": "https://github.com/TheOriginalJosh"
+    },
+    {
+      "name": "TJ VanToll",
+      "email": "tj.vantoll@gmail.com",
+      "url": "https://github.com/tjvantoll"
     }
   ],
   "license": {
