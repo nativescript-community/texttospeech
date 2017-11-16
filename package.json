@@ -1,6 +1,6 @@
 {
   "name": "nativescript-texttospeech",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "A text to speech NativeScript plugin for Android and iOS",
   "main": "texttospeech",
   "typings": "index.d.ts",
