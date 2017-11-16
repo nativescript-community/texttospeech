@@ -5,24 +5,21 @@
   "repository": "<fill-your-repository-here>",
   "nativescript": {
     "id": "org.nativescript.demo",
-    "tns-ios": {
-      "version": "2.3.0"
-    },
     "tns-android": {
-      "version": "2.3.0"
+      "version": "3.3.1"
     }
   },
   "dependencies": {
     "nativescript-texttospeech": "file:..",
-    "tns-core-modules": "^2.3.0"
+    "tns-core-modules": "^3.3.0"
   },
   "devDependencies": {
     "babel-traverse": "6.15.0",
     "babel-types": "6.15.0",
     "babylon": "6.9.1",
     "lazy": "1.0.11",
-    "nativescript-dev-typescript": "^0.3.0",
-    "tns-platform-declarations": "^2.2.0",
-    "typescript": "^1.8.10"
+    "nativescript-dev-typescript": "^0.5.1",
+    "tns-platform-declarations": "^3.3.0",
+    "typescript": "^2.5.1"
   }
 }

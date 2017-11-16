@@ -1,46 +1,40 @@
-import { Page } from 'ui/page';
-import { Observable } from "data/observable";
-import { isIOS } from 'platform';
-import { TNSTextToSpeech, SpeakOptions } from 'nativescript-texttospeech';
+import { Page } from "tns-core-modules/ui/page";
+import { Observable } from "tns-core-modules/data/observable";
+import { isIOS } from "tns-core-modules/platform";
+import { TNSTextToSpeech, SpeakOptions } from "nativescript-texttospeech";
 
 export class HelloWorldModel extends Observable {
+  public speakText: string;
+  private _SpeechSynthesizer: TNSTextToSpeech;
 
-    public speakText: string;
-    private SpeechSynthesizer: TNSTextToSpeech;
+  constructor(mainPage: Page) {
+    super();
+    this.speakText = "Hello Brad";
+    this._SpeechSynthesizer = new TNSTextToSpeech() as TNSTextToSpeech;
+    this._SpeechSynthesizer.speak({ text: "" });
+  }
 
-    constructor(mainPage: Page) {
-        super();
-        console.log('page: ' + mainPage);
+  public speakThis() {
+    const opts: SpeakOptions = {
+      text: this.get("speakText"),
+      speakRate: isIOS ? 0.45 : null,
+      finishedCallback: () => {
+        alert("Finished Speaking :)");
+      }
+    };
 
-        this.speakText = 'Hello Brad';
-        this.SpeechSynthesizer = new TNSTextToSpeech();
-    }
+    this._SpeechSynthesizer.speak(opts);
+  }
 
+  public byebyeTextToSpeech() {
+    this._SpeechSynthesizer.destroy();
+  }
 
-    public speakThis() {
-        let opts: SpeakOptions = {
-            text: this.get('speakText'),
-            speakRate: isIOS ? 0.45 : null,
-            finishedCallback: (() => {
-                alert('Finished Speaking :)');
-            })
-        }
+  public pauseSynthesizer() {
+    this._SpeechSynthesizer.pause();
+  }
 
-        this.SpeechSynthesizer.speak(opts);
-
-    }
-
-    public byebyeTextToSpeech() {
-        this.SpeechSynthesizer.destroy();
-    }
-
-    public pauseSynthesizer() {
-        this.SpeechSynthesizer.pause();
-    }
-
-
-    public resumeSynthesizer() {
-        this.SpeechSynthesizer.resume();
-    }
-
+  public resumeSynthesizer() {
+    this._SpeechSynthesizer.resume();
+  }
 }

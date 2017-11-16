@@ -91,6 +91,9 @@ let speakOptions: SpeakOptions = {
 }
 ```
 
+### Tip
+- The speech synthesizer takes a moment to initialize on most devices. A simple way to get around this (tested in the demo app) is to create your new instance of the TNSTextToSpeech and then immediately call the `speak` method with the options objects `text` value = `""`. This will force the synthesizer to "warm up" and not speak anything. Now when you call the `speak` method for your app's functionality it will already have "warmed up" the synthesizer so the delay should be minimal.
+It's possible this "Warm up" process could be put into the plugin source itself, I don't have time to do it right now but welcome any contribution that is well tested to make this the default behavior of the synthesizers.
 
 ### Android Only Methods
 

@@ -4,9 +4,9 @@
 *.d.ts
 !index.d.ts
 demo/lib
-demo/app/app_resources
 demo/app/*.js
 demo/*.d.ts
+demo/hooks
 demo/platforms
 demo/node_modules
 demo/.vscode

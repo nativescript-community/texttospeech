@@ -18,7 +18,19 @@
     "url": "https://github.com/bradmartin/nativescript-texttospeech.git"
   },
   "scripts": {
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "build": "tsc",
+    "nuke":
+      "rm -rf node_modules && cd ../demo && rm -rf hooks node_modules platforms && cd ../demo-ng && rm -rf hooks node_modules platforms",
+    "demo.ios": "npm run preparedemo && cd demo && tns run ios --emulator",
+    "demo.ios.device": "npm run preparedemo && cd demo && tns run ios",
+    "demo.android":
+      "npm run preparedemo && cd demo && tns run android --emulator",
+    "demo.android.device": "npm run preparedemo && cd demo && tns run android",
+    "setup":
+      "npm i && cd demo && npm i && cd .. && npm run build && cd demo && tns plugin add .. && cd ..",
+    "preparedemo":
+      "npm i && npm run build && cd demo && tns plugin remove nativescript-texttospeech && tns plugin add .. && tns install"
   },
   "lint-staged": {
     "*.ts": ["prettier --write", "git add"]
@@ -30,7 +42,8 @@
     "iOS",
     "JavaScript"
   ],
-  "author": "Anarchic Knight <anarchicknight@gmail.com> (http://www.anarchicknight.co.uk)",
+  "author":
+    "Anarchic Knight <anarchicknight@gmail.com> (http://www.anarchicknight.co.uk)",
   "contributors": [
     {
       "name": "Brad Martin",
@@ -62,7 +75,8 @@
   ],
   "license": {
     "type": "MIT",
-    "url": "https://github.com/bradmartin/nativescript-texttospeech/blob/master/LICENSE"
+    "url":
+      "https://github.com/bradmartin/nativescript-texttospeech/blob/master/LICENSE"
   },
   "bugs": {
     "url": "https://github.com/bradmartin/nativescript-texttospeech/issues"
