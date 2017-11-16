@@ -12,7 +12,6 @@ let doneCallback;
 
 class MySpeechDelegate extends NSObject {
   public static ObjCProtocols = [AVSpeechSynthesizerDelegate];
-
   speechSynthesizerDidStartSpeechUtterance(synthesizer, utterance) {
     // TODO
   }
@@ -45,6 +44,7 @@ class MySpeechDelegate extends NSObject {
 
 export class TNSTextToSpeech {
   private _speechSynthesizer: any; /// AVSpeechSynthesizer
+  private _lastOptions: SpeakOptions = null;
 
   public speak(options: SpeakOptions): Promise<any> {
     return new Promise((resolve, reject) => {
@@ -57,6 +57,8 @@ export class TNSTextToSpeech {
         reject("Text is required to speak.");
         return;
       }
+
+      this._lastOptions = options;
 
       doneCallback = options.finishedCallback;
 

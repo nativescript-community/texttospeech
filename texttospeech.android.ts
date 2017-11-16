@@ -21,7 +21,7 @@ export class TNSTextToSpeech {
         // TODO
       },
       onDone: (utteranceId: string) => {
-        if (this._lastOptions.finishedCallback) {
+        if (this._lastOptions && this._lastOptions.finishedCallback) {
           this._lastOptions.finishedCallback();
         }
       }
