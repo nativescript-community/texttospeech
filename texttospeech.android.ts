@@ -182,6 +182,7 @@ export class TNSTextToSpeech {
       /// < Android API 21 - https://developer.android.com/reference/android/speech/tts/TextToSpeech.html#speak(java.lang.String, int, java.util.HashMap<java.lang.String, java.lang.String>)
       let hashMap = new java.util.HashMap();
       hashMap.put("volume", options.volume.toString());
+      hashMap.put(android.speech.tts.TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "UniqueID");
       this._tts.speak(options.text, queueMode, hashMap);
     }
   }
