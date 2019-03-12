@@ -89,7 +89,7 @@
   },
   "dependencies": {},
   "lint-staged": {
-    "*.{ts, js, json, scss, md}": [
+    "*.{ts, js, json, scss, md, xml, html}": [
       "tslint",
       "prettier --write",
       "git add"
