@@ -1,9 +1,14 @@
 <Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo">
     <StackLayout>
-        <Button text="Speak This" tap="{{ speakThis }}"/>
-        <TextField hint="Speak this..." text="{{ speakText }}" />
-        <Button text="Destroy Synthesizer" tap="{{ byebyeSynthesizer }}" />
-        <Button text="Pause" tap="{{ pauseSynthesizer }}" />
-        <Button text="Resume" tap="{{ resumeSynthesizer }}" />
+        <Button text="Speak This" tap="{{ speakThis }}" class="btn btn-primary" />
+
+        <StackLayout class="input-field">
+            <Label text="Enter text:" class="label"></Label>
+            <TextView text="{{ speakText }}" hint="Enter the text to speak..." editable="true" class="input input-border"></TextView>
+        </StackLayout>
+
+        <Button text="Pause" tap="{{ pauseSynthesizer }}" class="btn btn-primary" />
+        <Button text="Resume" tap="{{ resumeSynthesizer }}" class="btn btn-primary" />
+        <Button text="Destroy Synthesizer" tap="{{ byebyeSynthesizer }}" class="btn btn-danger" />
     </StackLayout>
 </Page>

@@ -9,7 +9,8 @@ export class HelloWorldModel extends Observable {
 
   constructor(mainPage: Page) {
     super();
-    this.speakText = 'Hello Brad';
+    this.speakText =
+      'Hello and welcome to Native Script. Hope you enjoy the power.';
     this._SpeechSynthesizer = new TNSTextToSpeech() as TNSTextToSpeech;
     this._SpeechSynthesizer.speak({ text: '' });
   }
@@ -28,13 +29,16 @@ export class HelloWorldModel extends Observable {
 
   public byebyeTextToSpeech() {
     this._SpeechSynthesizer.destroy();
+    console.log('destroyed');
   }
 
   public pauseSynthesizer() {
     this._SpeechSynthesizer.pause();
+    console.log('paused speech');
   }
 
   public resumeSynthesizer() {
     this._SpeechSynthesizer.resume();
+    console.log('resumed speech');
   }
 }
