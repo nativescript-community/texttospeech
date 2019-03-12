@@ -1,5 +1,4 @@
-<Page 
-    xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo">
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo">
     <StackLayout>
         <Button text="Speak This" tap="{{ speakThis }}"/>
         <TextField hint="Speak this..." text="{{ speakText }}" />

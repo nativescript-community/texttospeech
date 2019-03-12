@@ -1,7 +1,7 @@
-import { Page } from "tns-core-modules/ui/page";
-import { Observable } from "tns-core-modules/data/observable";
-import { isIOS } from "tns-core-modules/platform";
-import { TNSTextToSpeech, SpeakOptions } from "nativescript-texttospeech";
+import { Page } from 'tns-core-modules/ui/page';
+import { Observable } from 'tns-core-modules/data/observable';
+import { isIOS } from 'tns-core-modules/platform';
+import { TNSTextToSpeech, SpeakOptions } from 'nativescript-texttospeech';
 
 export class HelloWorldModel extends Observable {
   public speakText: string;
@@ -9,17 +9,17 @@ export class HelloWorldModel extends Observable {
 
   constructor(mainPage: Page) {
     super();
-    this.speakText = "Hello Brad";
+    this.speakText = 'Hello Brad';
     this._SpeechSynthesizer = new TNSTextToSpeech() as TNSTextToSpeech;
-    this._SpeechSynthesizer.speak({ text: "" });
+    this._SpeechSynthesizer.speak({ text: '' });
   }
 
   public speakThis() {
     const opts: SpeakOptions = {
-      text: this.get("speakText"),
+      text: this.get('speakText'),
       speakRate: isIOS ? 0.45 : null,
       finishedCallback: () => {
-        alert("Finished Speaking :)");
+        alert('Finished Speaking :)');
       }
     };
 
