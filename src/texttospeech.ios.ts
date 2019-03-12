@@ -1,36 +1,30 @@
-import { SpeakOptions } from "./index";
+/// <reference path="./node_modules/tns-platform-declarations/ios.d.ts" />
 
-declare var NSObject,
-  AVSpeechUtterance,
-  AVSpeechSynthesizer,
-  AVSpeechSynthesisVoice,
-  AVSpeechBoundary,
-  AVSpeechSynthesizerDelegate: any;
+import { SpeakOptions } from './index';
 
-let delegate;
 let doneCallback;
 
 class MySpeechDelegate extends NSObject {
   public static ObjCProtocols = [AVSpeechSynthesizerDelegate];
-  speechSynthesizerDidStartSpeechUtterance(synthesizer, utterance) {
+  public speechSynthesizerDidStartSpeechUtterance(synthesizer, utterance) {
     // TODO
   }
 
-  speechSynthesizerDidFinishSpeechUtterance(synthesizer, utterance) {
+  public speechSynthesizerDidFinishSpeechUtterance(synthesizer, utterance) {
     if (doneCallback) {
       doneCallback();
     }
   }
 
-  speechSynthesizerDidPauseSpeechUtterance(synthesizer, utterance) {
+  public speechSynthesizerDidPauseSpeechUtterance(synthesizer, utterance) {
     // TODO
   }
 
-  speechSynthesizerDidContinueSpeechUtterance(synthesizer, utterance) {
+  public speechSynthesizerDidContinueSpeechUtterance(synthesizer, utterance) {
     // console.log("Continued speaking");
   }
 
-  speechSynthesizerDidCancelSpeechUtterance(synthesizer, utterance) {
+  public speechSynthesizerDidCancelSpeechUtterance(synthesizer, utterance) {
     // console.log("Cancelled speaking");
   }
 }
@@ -54,7 +48,7 @@ export class TNSTextToSpeech {
       }
 
       if (!this.isString(options.text)) {
-        reject("Text is required to speak.");
+        reject('Text is required to speak.');
         return;
       }
 
@@ -73,18 +67,11 @@ export class TNSTextToSpeech {
 
       // valid values are AVSpeechUtteranceMinimumSpeechRate to AVSpeechUtteranceMaximumSpeechRate
       if (!this.isNumber(options.speakRate)) {
-        options.speakRate =
-          AVSpeechUtterance.AVSpeechUtteranceMaximumSpeechRate / 4.0; // default rate is way too fast
-      } else if (
-        options.speakRate < AVSpeechUtterance.AVSpeechUtteranceMinimumSpeechRate
-      ) {
-        options.speakRate =
-          AVSpeechUtterance.AVSpeechUtteranceMinimumSpeechRate;
-      } else if (
-        options.speakRate > AVSpeechUtterance.AVSpeechUtteranceMaximumSpeechRate
-      ) {
-        options.speakRate =
-          AVSpeechUtterance.AVSpeechUtteranceMaximumSpeechRate;
+        options.speakRate = AVSpeechUtteranceMaximumSpeechRate / 4.0; // default rate is way too fast
+      } else if (options.speakRate < AVSpeechUtteranceMinimumSpeechRate) {
+        options.speakRate = AVSpeechUtteranceMinimumSpeechRate;
+      } else if (options.speakRate > AVSpeechUtteranceMaximumSpeechRate) {
+        options.speakRate = AVSpeechUtteranceMaximumSpeechRate;
       }
 
       // valid values for volume are 0.0 to 1.0
@@ -94,7 +81,7 @@ export class TNSTextToSpeech {
         options.volume = 0.0;
       }
 
-      let speechUtterance = AVSpeechUtterance.alloc().initWithString(
+      const speechUtterance = AVSpeechUtterance.alloc().initWithString(
         options.text
       );
 
@@ -121,7 +108,7 @@ export class TNSTextToSpeech {
 
       if (!options.queue && this._speechSynthesizer.speaking) {
         this._speechSynthesizer.stopSpeakingAtBoundary(
-          AVSpeechBoundary.AVSpeechBoundaryImmediate
+          AVSpeechBoundary.Immediate
         );
       }
 
@@ -132,9 +119,7 @@ export class TNSTextToSpeech {
 
   public pause(now) {
     this._speechSynthesizer.pauseSpeakingAtBoundary(
-      now
-        ? AVSpeechBoundary.AVSpeechBoundaryImmediate
-        : AVSpeechBoundary.AVSpeechBoundaryWord
+      now ? AVSpeechBoundary.Immediate : AVSpeechBoundary.Word
     );
   }
 
@@ -152,20 +137,20 @@ export class TNSTextToSpeech {
    */
 
   private isString(elem) {
-    return Object.prototype.toString.call(elem).slice(8, -1) === "String";
+    return Object.prototype.toString.call(elem).slice(8, -1) === 'String';
   }
 
   private isBoolean(elem) {
-    return Object.prototype.toString.call(elem).slice(8, -1) === "Boolean";
+    return Object.prototype.toString.call(elem).slice(8, -1) === 'Boolean';
   }
 
   private isNumber(elem) {
-    return Object.prototype.toString.call(elem).slice(8, -1) === "Number";
+    return Object.prototype.toString.call(elem).slice(8, -1) === 'Number';
   }
 
   // helper function to test whether language code has valid syntax
   private isValidLocale(locale) {
-    let re = new RegExp("\\w\\w-\\w\\w");
+    const re = new RegExp('\\w\\w-\\w\\w');
     return re.test(locale);
   }
 }

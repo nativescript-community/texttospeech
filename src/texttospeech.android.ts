@@ -1,32 +1,29 @@
-import * as appModule from "tns-core-modules/application";
-import { SpeakOptions, Language } from "./index";
+/// <reference path="./node_modules/tns-platform-declarations/android.d.ts" />
 
-declare var android, java: any;
-
-const Locale = java.util.Locale;
+import * as appModule from 'tns-core-modules/application';
+import { SpeakOptions, Language } from './index';
 
 export class TNSTextToSpeech {
   private _tts: any; /// android.speech.tts.TextToSpeech
   private _initialized: boolean = false;
   private _lastOptions: SpeakOptions = null; // saves a reference to the last passed SpeakOptions for pause/resume/callback methods.
-  private _utteranceProgressListener = android.speech.tts.UtteranceProgressListener.extend(
-    {
-      init: () => {
-        // console.log("UtteranceProgressListener created!");
-      },
-      onStart: (utteranceId: string) => {
-        // TODO
-      },
-      onError: (utteranceId: string) => {
-        // TODO
-      },
-      onDone: (utteranceId: string) => {
-        if (this._lastOptions && this._lastOptions.finishedCallback) {
-          this._lastOptions.finishedCallback();
-        }
+  private _utteranceProgressListener = (android.speech.tts
+    .UtteranceProgressListener as any).extend({
+    init: () => {
+      // console.log("UtteranceProgressListener created!");
+    },
+    onStart: (utteranceId: string) => {
+      // TODO
+    },
+    onError: (utteranceId: string) => {
+      // TODO
+    },
+    onDone: (utteranceId: string) => {
+      if (this._lastOptions && this._lastOptions.finishedCallback) {
+        this._lastOptions.finishedCallback();
       }
     }
-  );
+  });
 
   private init(): Promise<any> {
     return new Promise((resolve, reject) => {
@@ -59,7 +56,7 @@ export class TNSTextToSpeech {
   public speak(options: SpeakOptions): Promise<any> {
     return new Promise((resolve, reject) => {
       if (!this.isString(options.text)) {
-        reject("Text property is required to speak.");
+        reject('Text property is required to speak.');
         return;
       }
 
@@ -70,13 +67,13 @@ export class TNSTextToSpeech {
             try {
               maxLen = this._tts.getMaxSpeechInputLength();
             } catch (error) {
-              //console.log(error);
+              // console.log(error);
             }
           }
 
           if (options.text.length > maxLen) {
             reject(
-              "Text cannot be greater than " + maxLen.toString() + " characters"
+              'Text cannot be greater than ' + maxLen.toString() + ' characters'
             );
             return;
           }
@@ -95,9 +92,9 @@ export class TNSTextToSpeech {
   }
 
   /**
-       * Interrupts the current utterance and discards other utterances in the queue.
-       * https://developer.android.com/reference/android/speech/tts/TextToSpeech.html#stop()
-       */
+   * Interrupts the current utterance and discards other utterances in the queue.
+   * https://developer.android.com/reference/android/speech/tts/TextToSpeech.html#stop()
+   */
   public pause() {
     if (this._tts && this._initialized) {
       this._tts.stop();
@@ -105,16 +102,16 @@ export class TNSTextToSpeech {
   }
 
   public resume() {
-    //In Android there's no pause so we resume playng the last phrase...
+    // In Android there's no pause so we resume playng the last phrase...
     if (this._lastOptions) {
       this.speak(this._lastOptions);
     }
   }
 
   /**
-         * Releases the resources used by the TextToSpeech engine.
-         * https://developer.android.com/reference/android/speech/tts/TextToSpeech.html#shutdown()
-         */
+   * Releases the resources used by the TextToSpeech engine.
+   * https://developer.android.com/reference/android/speech/tts/TextToSpeech.html#shutdown()
+   */
   public destroy() {
     if (this._tts) {
       this._tts.shutdown();
@@ -123,17 +120,17 @@ export class TNSTextToSpeech {
 
   private speakText(options: SpeakOptions) {
     if (this.isString(options.locale) && this.isValidLocale(options.locale)) {
-      let localeArray = options.locale.split("-");
-      let locale = new Locale(localeArray[0], localeArray[1]);
+      const localeArray = options.locale.split('-');
+      const locale = new java.util.Locale(localeArray[0], localeArray[1]);
       this._tts.setLanguage(locale);
     } else if (this.isString(options.language)) {
       let locale = null;
       if (this.isValidLocale(options.language)) {
         // only for backwards compatbility with old API
-        let languageArray = options.language.split("-");
-        locale = new Locale(languageArray[0], languageArray[1]);
+        const languageArray = options.language.split('-');
+        locale = new java.util.Locale(languageArray[0], languageArray[1]);
       } else {
-        locale = new Locale(options.language);
+        locale = new java.util.Locale(options.language);
       }
       if (locale) {
         this._tts.setLanguage(locale);
@@ -168,32 +165,32 @@ export class TNSTextToSpeech {
     this._tts.setPitch(options.pitch);
     this._tts.setSpeechRate(options.speakRate);
 
-    let queueMode = options.queue
+    const queueMode = options.queue
       ? android.speech.tts.TextToSpeech.QUEUE_ADD
       : android.speech.tts.TextToSpeech.QUEUE_FLUSH;
 
     if (android.os.Build.VERSION.SDK_INT >= 21) {
       // Hardcoded this value since the static field LOLLIPOP doesn't exist in Android 4.4
       /// >= Android API 21 - https://developer.android.com/reference/android/speech/tts/TextToSpeech.html#speak(java.lang.CharSequence, int, android.os.Bundle, java.lang.String)
-      let params = new android.os.Bundle();
-      params.putString("volume", options.volume.toString());
-      this._tts.speak(options.text, queueMode, params, "UniqueID");
+      const params = new android.os.Bundle();
+      params.putString('volume', options.volume.toString());
+      this._tts.speak(options.text, queueMode, params, 'UniqueID');
     } else {
       /// < Android API 21 - https://developer.android.com/reference/android/speech/tts/TextToSpeech.html#speak(java.lang.String, int, java.util.HashMap<java.lang.String, java.lang.String>)
-      let hashMap = new java.util.HashMap();
-      hashMap.put("volume", options.volume.toString());
+      const hashMap = new java.util.HashMap();
+      hashMap.put('volume', options.volume.toString());
       this._tts.speak(options.text, queueMode, hashMap);
     }
   }
 
-  public getAvailableLanguages(): Promise<Array<Language>> {
+  public getAvailableLanguages(): Promise<Language[]> {
     return new Promise((resolve, reject) => {
-      let result: Array<Language> = new Array<Language>();
+      const result: Language[] = new Array<Language>();
       this.init().then(
         () => {
-          var languages = this._tts.getAvailableLanguages().toArray();
-          for (var c = 0; c < languages.length; c++) {
-            let lang: Language = {
+          const languages = this._tts.getAvailableLanguages().toArray();
+          for (let c = 0; c < languages.length; c++) {
+            const lang: Language = {
               language: languages[c].getLanguage(),
               languageDisplay: languages[c].getDisplayLanguage(),
               country: languages[c].getCountry(),
@@ -215,34 +212,36 @@ export class TNSTextToSpeech {
     if (appModule.android.context) {
       return appModule.android.context;
     }
-    var ctx = java.lang.Class
-      .forName("android.app.AppGlobals")
-      .getMethod("getInitialApplication", null)
-      .invoke(null, null);
-    if (ctx) return ctx;
 
-    ctx = java.lang.Class
-      .forName("android.app.ActivityThread")
-      .getMethod("currentApplication", null)
+    let ctx = java.lang.Class.forName('android.app.AppGlobals')
+      .getMethod('getInitialApplication', null)
+      .invoke(null, null);
+
+    if (ctx) {
+      return ctx;
+    }
+
+    ctx = java.lang.Class.forName('android.app.ActivityThread')
+      .getMethod('currentApplication', null)
       .invoke(null, null);
     return ctx;
   }
 
   // helper function to test whether language code has valid syntax
   private isValidLocale(locale) {
-    var re = new RegExp("\\w\\w-\\w\\w");
+    const re = new RegExp('\\w\\w-\\w\\w');
     return re.test(locale);
   }
 
   private isString(elem) {
-    return Object.prototype.toString.call(elem).slice(8, -1) === "String";
+    return Object.prototype.toString.call(elem).slice(8, -1) === 'String';
   }
 
   private isBoolean(elem) {
-    return Object.prototype.toString.call(elem).slice(8, -1) === "Boolean";
+    return Object.prototype.toString.call(elem).slice(8, -1) === 'Boolean';
   }
 
   private isNumber(elem) {
-    return Object.prototype.toString.call(elem).slice(8, -1) === "Number";
+    return Object.prototype.toString.call(elem).slice(8, -1) === 'Number';
   }
 }
