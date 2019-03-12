@@ -1,5 +1,6 @@
 [![npm](https://img.shields.io/npm/v/nativescript-texttospeech.svg)](https://www.npmjs.com/package/nativescript-texttospeech)
 [![npm](https://img.shields.io/npm/dt/nativescript-texttospeech.svg?label=npm%20downloads)](https://www.npmjs.com/package/nativescript-texttospeech)
+[![Build Status](https://travis-ci.org/bradmartin/nativescript-texttospeech.svg?branch=master)](https://travis-ci.org/bradmartin/nativescript-texttospeech)
 
 # NativeScript-TextToSpeech :loudspeaker:
 
