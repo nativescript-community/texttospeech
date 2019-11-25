@@ -94,8 +94,15 @@ export class TNSTextToSpeech {
   /**
    * Interrupts the current utterance and discards other utterances in the queue.
    * https://developer.android.com/reference/android/speech/tts/TextToSpeech.html#stop()
+   * Same as stop()
    */
   public pause() {
+    if (this._tts && this._initialized) {
+      this._tts.stop();
+    }
+  }
+
+  public stop() {
     if (this._tts && this._initialized) {
       this._tts.stop();
     }
