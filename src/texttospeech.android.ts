@@ -1,7 +1,7 @@
 /// <reference path="./node_modules/tns-platform-declarations/android.d.ts" />
 
 import * as appModule from 'tns-core-modules/application';
-import { SpeakOptions, Language } from './index';
+import { Language, SpeakOptions } from './index';
 
 export class TNSTextToSpeech {
   private _tts: any; /// android.speech.tts.TextToSpeech

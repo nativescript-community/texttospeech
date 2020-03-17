@@ -1,7 +1,7 @@
-import { Page } from 'tns-core-modules/ui/page';
+import { SpeakOptions, TNSTextToSpeech } from 'nativescript-texttospeech';
 import { Observable } from 'tns-core-modules/data/observable';
 import { isIOS } from 'tns-core-modules/platform';
-import { TNSTextToSpeech, SpeakOptions } from 'nativescript-texttospeech';
+import { Page } from 'tns-core-modules/ui/page';
 
 export class HelloWorldModel extends Observable {
   public speakText: string;
@@ -16,6 +16,10 @@ export class HelloWorldModel extends Observable {
   }
 
   public speakThis() {
+    if (!this._SpeechSynthesizer) {
+      this._SpeechSynthesizer = new TNSTextToSpeech() as TNSTextToSpeech;
+    }
+
     const opts: SpeakOptions = {
       text: this.get('speakText'),
       speakRate: isIOS ? 0.45 : null,
@@ -27,7 +31,8 @@ export class HelloWorldModel extends Observable {
     this._SpeechSynthesizer.speak(opts);
   }
 
-  public byebyeTextToSpeech() {
+  public byebyeSynthesizer() {
+    this._SpeechSynthesizer.pause();
     this._SpeechSynthesizer.destroy();
     console.log('destroyed');
   }
