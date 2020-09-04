@@ -11,6 +11,7 @@
   },
   "devDependencies": {
     "@nativescript/android": "7.0.0",
+    "@nativescript/ios": "7.0.0",
     "@nativescript/types": "^7.0.0",
     "@nativescript/webpack": "^3.0.1",
     "jasmine-core": "3.3.0",
