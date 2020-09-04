@@ -1,6 +1,6 @@
-/// <reference path="./node_modules/tns-platform-declarations/android.d.ts" />
+/// <reference path="./node_modules/@nativescript/types-android/index.d.ts" />
 
-import * as appModule from 'tns-core-modules/application';
+import { Application } from '@nativescript/core';
 import { Language, SpeakOptions } from './index';
 
 export class TNSTextToSpeech {
@@ -22,7 +22,7 @@ export class TNSTextToSpeech {
       if (this._lastOptions && this._lastOptions.finishedCallback) {
         this._lastOptions.finishedCallback();
       }
-    }
+    },
   });
 
   private init(): Promise<any> {
@@ -31,7 +31,7 @@ export class TNSTextToSpeech {
         this._tts = new android.speech.tts.TextToSpeech(
           this._getContext(),
           new android.speech.tts.TextToSpeech.OnInitListener({
-            onInit: status => {
+            onInit: (status) => {
               // if the TextToSpeech was successful initializing
               if (status === android.speech.tts.TextToSpeech.SUCCESS) {
                 this._initialized = true;
@@ -44,7 +44,7 @@ export class TNSTextToSpeech {
               } else {
                 reject(status);
               }
-            }
+            },
           })
         );
       } else {
@@ -84,7 +84,7 @@ export class TNSTextToSpeech {
           this.speakText(options);
           resolve();
         },
-        err => {
+        (err) => {
           reject(err);
         }
       );
@@ -194,13 +194,13 @@ export class TNSTextToSpeech {
               language: languages[c].getLanguage(),
               languageDisplay: languages[c].getDisplayLanguage(),
               country: languages[c].getCountry(),
-              countryDisplay: languages[c].getDisplayCountry()
+              countryDisplay: languages[c].getDisplayCountry(),
             };
             result.push(lang);
           }
           resolve(result);
         },
-        err => {
+        (err) => {
           reject(err);
         }
       );
@@ -209,8 +209,8 @@ export class TNSTextToSpeech {
 
   // helper function to get current app context
   private _getContext() {
-    if (appModule.android.context) {
-      return appModule.android.context;
+    if (Application.android.context) {
+      return Application.android.context;
     }
 
     let ctx = java.lang.Class.forName('android.app.AppGlobals')

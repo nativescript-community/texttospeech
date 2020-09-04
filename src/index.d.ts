@@ -1,28 +1,28 @@
 export declare class TNSTextToSpeech {
   /**
-     * Initiate the text to speech.
-     * @param {object} SpeakOptions - SpeakOptions object.
-     */
+   * Initiate the text to speech.
+   * @param {object} SpeakOptions - SpeakOptions object.
+   */
   speak(options: SpeakOptions): Promise<any>;
 
   /**
-     * Release the resources used by the TextToSpeech engine/synthesizer
-     */
+   * Release the resources used by the TextToSpeech engine/synthesizer
+   */
   destroy(): void;
 
   /**
-     * Pause the engine/synthesizer currently speaking.
-     */
+   * Pause the engine/synthesizer currently speaking.
+   */
   pause(): void;
 
   /**
-     * Resume the engine/synthesizer. On Android it will start from beginning - since there is no actual pause, only stop.
-     */
+   * Resume the engine/synthesizer. On Android it will start from beginning - since there is no actual pause, only stop.
+   */
   resume(): void;
 
   /**
-     * Android only: Returns array of available Languages
-     */
+   * Android only: Returns array of available Languages
+   */
   getAvailableLanguages(): Promise<Array<Language>>;
 }
 

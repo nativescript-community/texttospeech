@@ -1,7 +1,5 @@
+import { isIOS, Observable, Page } from '@nativescript/core';
 import { SpeakOptions, TNSTextToSpeech } from 'nativescript-texttospeech';
-import { Observable } from 'tns-core-modules/data/observable';
-import { isIOS } from 'tns-core-modules/platform';
-import { Page } from 'tns-core-modules/ui/page';
 
 export class HelloWorldModel extends Observable {
   public speakText: string;
@@ -25,7 +23,7 @@ export class HelloWorldModel extends Observable {
       speakRate: isIOS ? 0.45 : null,
       finishedCallback: () => {
         alert('Finished Speaking :)');
-      }
+      },
     };
 
     this._SpeechSynthesizer.speak(opts);
