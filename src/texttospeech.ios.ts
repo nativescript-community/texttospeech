@@ -123,6 +123,12 @@ export class TNSTextToSpeech {
     );
   }
 
+  public stop(now) {
+    this._speechSynthesizer.stopSpeakingAtBoundary(
+      now ? AVSpeechBoundary.Immediate : AVSpeechBoundary.Word
+    );
+  }
+
   public resume() {
     this._speechSynthesizer.continueSpeaking();
   }

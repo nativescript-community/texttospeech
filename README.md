@@ -68,6 +68,7 @@ TTS.speak(speakOptions).then(
 
 - `speak(options: SpeakOptions): Promise<any>` - start speaking with the given options
 - `pause(): void` - pause the speech
+- `stop(): void` - stop the speech
 - `resume(): void` - resume the speech
 - `destroy(): void` - release resources for the speech synthesizer/engine
 
@@ -111,6 +112,10 @@ const speakOptions: SpeakOptions = {
 ### Android Only Methods
 
 - `getAvailableLanguages(): Promise<Array<Language>>;` - returns an array of available languages (use to prevent using non-existing language/local codes)
+
+### Android and iOS specific features
+
+The `pause()` is only supported on iOS. Android stops the speech and will resume from the start. Also both `pause()` and `stop()` takes one argument on iOS, indicating whether we should stop right now (`true`) or after the word being said (`false`).
 
 ## Credits
 
