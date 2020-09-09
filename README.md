@@ -1,6 +1,6 @@
+![Build CI](https://github.com/bradmartin/nativescript-texttospeech/workflows/Build%20CI/badge.svg)
 [![npm](https://img.shields.io/npm/v/nativescript-texttospeech.svg)](https://www.npmjs.com/package/nativescript-texttospeech)
 [![npm](https://img.shields.io/npm/dt/nativescript-texttospeech.svg?label=npm%20downloads)](https://www.npmjs.com/package/nativescript-texttospeech)
-[![Build Status](https://travis-ci.org/bradmartin/nativescript-texttospeech.svg?branch=master)](https://travis-ci.org/bradmartin/nativescript-texttospeech)
 
 # NativeScript-TextToSpeech :loudspeaker:
 
@@ -15,8 +15,16 @@ A Text to Speech NativeScript plugin for Android & iOS
 
 Run the following command from the root of your project:
 
+NativeScript version 7+:
+
 ```
-$ tns plugin add nativescript-texttospeech
+tns plugin add nativescript-texttospeech
+```
+
+NativeScript Version below 7:
+
+```
+tns plugin add nativescript-texttospeech@2.0.3
 ```
 
 This command automatically installs the necessary files, as well as stores nativescript-texttospeech as a dependency in your project's package.json file.
@@ -29,20 +37,20 @@ This command automatically installs the necessary files, as well as stores nativ
 
 ```js
 /// javascript
-var TextToSpeech = require('nativescript-texttospeech');
+const TextToSpeech = require('nativescript-texttospeech');
 
 /// TypeScript
 import { TNSTextToSpeech, SpeakOptions } from 'nativescript-texttospeech';
 
-let TTS = new TNSTextToSpeech();
+const TTS = new TNSTextToSpeech();
 
-let speakOptions: SpeakOptions = {
+const speakOptions: SpeakOptions = {
   text: 'Whatever you like', /// *** required ***
   speakRate: 0.5, // optional - default is 1.0
   pitch: 1.0, // optional - default is 1.0
   volume: 1.0, // optional - default is 1.0
   locale: 'en-GB', // optional - default is system locale,
-  finishedCallback: Function // optional
+  finishedCallback: Function, // optional
 };
 
 // Call the `speak` method passing the SpeakOptions object
@@ -50,7 +58,7 @@ TTS.speak(speakOptions).then(
   () => {
     // everything is fine
   },
-  err => {
+  (err) => {
     // oops, something went wrong!
   }
 );
@@ -80,18 +88,18 @@ The plugin checks whether the supplied locale/language code has the correct synt
 Example with language code only:
 
 ```js
-let speakOptions: SpeakOptions = {
+const speakOptions: SpeakOptions = {
   text: 'Whatever you like', // *** required ***
-  language: 'en' // english language will be used
+  language: 'en', // english language will be used
 };
 ```
 
 Example with locale:
 
 ```js
-let speakOptions: SpeakOptions = {
+const speakOptions: SpeakOptions = {
   text: 'Whatever you like', // *** required ***
-  locale: 'en-AU' // australian english language will be used
+  locale: 'en-AU', // australian english language will be used
 };
 ```
 
