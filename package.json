@@ -1,9 +1,59 @@
 {
-  "scripts": {
-    "ci.base.setup": "npm i -g typescript && echo no | npm i -g nativescript && tns usage-reporting disable && tns error-reporting disable && cd src && npm i && tsc",
-    "ci.pip.install": "sudo pip install --upgrade pip && sudo pip install six",
-    "ci.tslint": "cd src && npm run ci.tslint && cd ../demo && npm run ci.tslint",
-    "ci.vanilla.android.build": "cd demo && tns build android --env.uglify",
-    "ci.vanilla.ios.build": "cd demo && tns build ios --env.uglify"
-  }
+    "name": "@nativescript-community/texttospeech",
+    "version": "1.0.0",
+    "scripts": {
+        "setup": "ts-patch install",
+        "build.angular": "ng-packagr -p src/angular/package.json -c src/angular/tsconfig.json",
+        "clean": "rimraf ./plugin/**/*.d.ts ./plugin/**/*.js ./plugin/**/*.js.map plugin/node_modules plugin/package-lock.json plugin/README.md demo/node_modules demo-angular/node_modules",
+        "tsc": "cpy '**/*.d.ts' '../plugin' --parents --cwd=src && tsc -skipLibCheck -d",
+        "build": "cp README.md ./plugin && rm -f .tsbuildinfo && npm run tsc ",
+        "publish": "npm run setup && npm run build && npm run build.angular && lerna publish --create-release=github",
+        "doc": "typedoc --out docs --tsconfig tsconfig.doc.json --includeDeclarations --excludeExternals --mode file --ignoreCompilerErrors --excludeNotExported --excludePrivate --theme minimal",
+        "commitmsg": "commitlint -e $GIT_PARAMS"
+    },
+    "devDependencies": {
+        "@commitlint/cli": "^11.0.0",
+        "@commitlint/config-conventional": "^11.0.0",
+        "@nativescript-community/texttospeech": "file:plugin",
+        "@nativescript/core": "7.0.13",
+        "@nativescript/ios": "7.0.4",
+        "@nativescript/types-android": "~7.0.4",
+        "@nativescript/types-ios": "~7.0.4",
+        "@nativescript/webpack": "3.0.8",
+        "@types/node": "14.14.9",
+        "@typescript-eslint/eslint-plugin": "4.8.1",
+        "@typescript-eslint/parser": "4.8.1",
+        "cpy-cli": "^3.1.1",
+        "eslint": "7.13.0",
+        "eslint-config-prettier": "^6.15.0",
+        "eslint-plugin-prettier": "^3.1.4",
+        "husky": "^4.3.0",
+        "lerna": "^3.22.1",
+        "prettier": "^2.2.0",
+        "prompt": "^1.0.0",
+        "rimraf": "^3.0.2",
+        "rxjs": "^6.6.3",
+        "ts-patch": "^1.3.0",
+        "typedoc": "^0.19.2",
+        "tslib": "2.0.3",
+        "typescript": "3.9.7"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/nativescript-community/texttospeech.git"
+    },
+    "author": "Anarchic Knight <anarchicknight@gmail.com> (http://www.anarchicknight.co.uk)",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/nativescript-community/texttospeech/issues"
+    },
+    "homepage": "https://github.com/nativescript-community/texttospeech#readme",
+    "commitlint": {
+        "extends": [
+            "@commitlint/config-conventional"
+        ]
+    },
+    "dependencies": {
+        "ts-node": "^8.10.2"
+    }
 }

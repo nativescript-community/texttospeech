@@ -1,8 +1,7 @@
-![Build CI](https://github.com/bradmartin/nativescript-texttospeech/workflows/Build%20CI/badge.svg)
-[![npm](https://img.shields.io/npm/v/nativescript-texttospeech.svg)](https://www.npmjs.com/package/nativescript-texttospeech)
-[![npm](https://img.shields.io/npm/dt/nativescript-texttospeech.svg?label=npm%20downloads)](https://www.npmjs.com/package/nativescript-texttospeech)
+[![npm](https://img.shields.io/npm/v/nativescript-community/texttospeech.svg)](https://www.npmjs.com/package/nativescript-community/texttospeech)
+[![npm](https://img.shields.io/npm/dt/nativescript-community/texttospeech.svg?label=npm%20downloads)](https://www.npmjs.com/package/nativescript-community/texttospeech)
 
-# NativeScript-TextToSpeech :loudspeaker:
+# @nativescript-community/texttospeech :loudspeaker:
 
 A Text to Speech NativeScript plugin for Android & iOS
 
@@ -15,19 +14,12 @@ A Text to Speech NativeScript plugin for Android & iOS
 
 Run the following command from the root of your project:
 
-NativeScript version 7+:
 
 ```
-tns plugin add nativescript-texttospeech
+tns plugin add @nativescript-community/texttospeech
 ```
 
-NativeScript Version below 7:
-
-```
-tns plugin add nativescript-texttospeech@2.0.3
-```
-
-This command automatically installs the necessary files, as well as stores nativescript-texttospeech as a dependency in your project's package.json file.
+This command automatically installs the necessary files, as well as stores @nativescript-community/texttospeech as a dependency in your project's package.json file.
 
 ## Video Tutorial
 
@@ -37,10 +29,10 @@ This command automatically installs the necessary files, as well as stores nativ
 
 ```js
 /// javascript
-const TextToSpeech = require('nativescript-texttospeech');
+const TextToSpeech = require('@nativescript-community/texttospeech');
 
 /// TypeScript
-import { TNSTextToSpeech, SpeakOptions } from 'nativescript-texttospeech';
+import { TNSTextToSpeech, SpeakOptions } from '@nativescript-community/texttospeech';
 
 const TTS = new TNSTextToSpeech();
 
@@ -105,7 +97,7 @@ const speakOptions: SpeakOptions = {
 
 ### Tip
 
-- The speech synthesizer takes a moment to initialize on most devices. A simple way to get around this (tested in the demo app) is to create your new instance of the TNSTextToSpeech and then immediately call the `speak` method with the options objects `text` value = `""`. This will force the synthesizer to "warm up" and not speak anything. Now when you call the `speak` method for your app's functionality it will already have "warmed up" the synthesizer so the delay should be minimal.
+- The speech synthesizer takes a moment to initialize on most devices. A simple way to get around this (tested in the demo app) is to create your new instance of the TNSTextToSpeech and then immediately call the `init` method . This will force the synthesizer to "warm up" . Now when you call the `speak` method for your app's functionality it will already have "warmed up" the synthesizer so the delay should be minimal.
   It's possible this "Warm up" process could be put into the plugin source itself, I don't have time to do it right now but welcome any contribution that is well tested to make this the default behavior of the synthesizers.
 
 ### Android Only Methods
