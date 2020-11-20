@@ -45,7 +45,7 @@ export class TNSTextToSpeech {
     delegate: MySpeechDelegate;
 
     public async init() {
-      //stub function to be like android
+        //stub function to be like android
     }
     public async speak(options: SpeakOptions): Promise<any> {
         if (!this._speechSynthesizer) {

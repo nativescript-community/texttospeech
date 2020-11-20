@@ -1,12 +1,11 @@
 export declare class TNSTextToSpeech {
+    init(): Promise<void>;
 
-    async init();
-    
     /**
      * Initiate the text to speech.
      * @param {object} SpeakOptions - SpeakOptions object.
      */
-    async speak(options: SpeakOptions);
+    speak(options: SpeakOptions): Promise<void>;
 
     /**
      * Release the resources used by the TextToSpeech engine/synthesizer
