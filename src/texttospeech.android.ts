@@ -25,22 +25,26 @@ export class TNSTextToSpeech {
 
     private async init() {
         if (!this._tts || !this._initialized) {
-            this._tts = new android.speech.tts.TextToSpeech(
-                this._getContext(),
-                new android.speech.tts.TextToSpeech.OnInitListener({
-                    onInit: (status) => {
-                        // if the TextToSpeech was successful initializing
-                        if (status === android.speech.tts.TextToSpeech.SUCCESS) {
-                            this._initialized = true;
-                            const listener = new UtteranceProgressListener();
-                            this.listener = listener;
-                            this._tts.setOnUtteranceProgressListener(listener);
-                        } else {
-                            throw new Error('TextToSpeech failed to init with code ' + status);
-                        }
-                    },
-                })
-            );
+            return new Promise<void>((resolve, reject) => {
+                this._tts = new android.speech.tts.TextToSpeech(
+                    this._getContext(),
+                    new android.speech.tts.TextToSpeech.OnInitListener({
+                        onInit: (status) => {
+                            // if the TextToSpeech was successful initializing
+                            console.log('init done', status);
+                            if (status === android.speech.tts.TextToSpeech.SUCCESS) {
+                                this._initialized = true;
+                                const listener = new UtteranceProgressListener();
+                                this.listener = listener;
+                                this._tts.setOnUtteranceProgressListener(listener);
+                                resolve();
+                            } else {
+                                reject(new Error('TextToSpeech failed to init with code ' + status));
+                            }
+                        },
+                    })
+                );
+            });
         }
     }
 
@@ -48,7 +52,6 @@ export class TNSTextToSpeech {
         if (!this.isString(options.text)) {
             throw new Error('Text property is required to speak.');
         }
-
         await this.init();
         let maxLen: number = 4000; // API level 18 added method for getting value dynamically
         if (android.os.Build.VERSION.SDK_INT >= 18) {
@@ -148,7 +151,7 @@ export class TNSTextToSpeech {
         this._tts.setSpeechRate(options.speakRate);
 
         const queueMode = options.queue ? android.speech.tts.TextToSpeech.QUEUE_ADD : android.speech.tts.TextToSpeech.QUEUE_FLUSH;
-
+        console.log('about to speak');
         if (android.os.Build.VERSION.SDK_INT >= 21) {
             // Hardcoded this value since the static field LOLLIPOP doesn't exist in Android 4.4
             /// >= Android API 21 - https://developer.android.com/reference/android/speech/tts/TextToSpeech.html#speak(java.lang.CharSequence, int, android.os.Bundle, java.lang.String)
