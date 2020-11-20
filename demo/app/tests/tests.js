@@ -1,7 +1,7 @@
 describe('lottiview class', function() {
   it('can be instantiated', function() {
     var testTNSTextToSpeech;
-    var TNSTextToSpeech = require('nativescript-texttospeech').TNSTextToSpeech;
+    var TNSTextToSpeech = require('@nativescript-community/texttospeech').TNSTextToSpeech;
     if (TNSTextToSpeech) {
       testTNSTextToSpeech = new TNSTextToSpeech();
       console.log('TNSTextToSpeech instance: ' + testTNSTextToSpeech);

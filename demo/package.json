@@ -4,10 +4,10 @@
   "readme": "NativeScript Application",
   "repository": "<fill-your-repository-here>",
   "dependencies": {
-    "nativescript-texttospeech": "file:../src",
+    "@nativescript-community/texttospeech": "file:../plugin",
     "nativescript-theme-core": "~1.0.4",
     "nativescript-unit-test-runner": "0.7.0",
-    "@nativescript/core": "^7.0.0"
+    "@nativescript/core": "^7.0.13"
   },
   "devDependencies": {
     "@nativescript/android": "7.0.0",
