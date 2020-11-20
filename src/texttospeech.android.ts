@@ -31,7 +31,6 @@ export class TNSTextToSpeech {
                     new android.speech.tts.TextToSpeech.OnInitListener({
                         onInit: (status) => {
                             // if the TextToSpeech was successful initializing
-                            console.log('init done', status);
                             if (status === android.speech.tts.TextToSpeech.SUCCESS) {
                                 this._initialized = true;
                                 const listener = new UtteranceProgressListener();
@@ -151,7 +150,6 @@ export class TNSTextToSpeech {
         this._tts.setSpeechRate(options.speakRate);
 
         const queueMode = options.queue ? android.speech.tts.TextToSpeech.QUEUE_ADD : android.speech.tts.TextToSpeech.QUEUE_FLUSH;
-        console.log('about to speak');
         if (android.os.Build.VERSION.SDK_INT >= 21) {
             // Hardcoded this value since the static field LOLLIPOP doesn't exist in Android 4.4
             /// >= Android API 21 - https://developer.android.com/reference/android/speech/tts/TextToSpeech.html#speak(java.lang.CharSequence, int, android.os.Bundle, java.lang.String)
