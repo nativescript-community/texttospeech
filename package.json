@@ -3,10 +3,11 @@
     "version": "1.0.0",
     "scripts": {
         "setup": "ts-patch install",
+"prepare": "npm run setup",
         "clean": "rimraf ./plugin/**/*.d.ts ./plugin/**/*.js ./plugin/**/*.js.map plugin/node_modules plugin/package-lock.json plugin/README.md demo/node_modules demo-angular/node_modules",
         "tsc": "cpy '**/*.d.ts' '../plugin' --parents --cwd=src && tsc -skipLibCheck -d",
         "build": "cp README.md ./plugin && rm -f .tsbuildinfo && npm run tsc ",
-        "publish": "npm run setup && npm run build  && lerna publish --create-release=github",
+        "publish": "npm run setup && npm run build  && lerna publish --create-release=github --force-publish",
         "doc": "typedoc --out docs --tsconfig tsconfig.doc.json --includeDeclarations --excludeExternals --mode file --ignoreCompilerErrors --excludeNotExported --excludePrivate --theme minimal",
         "commitmsg": "commitlint -e $GIT_PARAMS"
     },
