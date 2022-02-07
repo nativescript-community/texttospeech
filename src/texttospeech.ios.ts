@@ -59,7 +59,26 @@ export class TNSTextToSpeech {
 
         this._lastOptions = options;
 
-        this.delegate.doneCallback = options.finishedCallback;
+        const needsAudioSession = options.sessionCategory || options.sessionMode || options.sessionRouteSharingPolicy || options.audioMixing;
+        const audioSession = AVAudioSession.sharedInstance();
+
+        if (needsAudioSession) {
+            audioSession.setCategoryModeRouteSharingPolicyOptionsError(
+                options.sessionCategory || AVAudioSessionCategoryAmbient,
+                options.sessionMode || AVAudioSessionModeDefault,
+                options.sessionRouteSharingPolicy || AVAudioSessionRouteSharingPolicy.LongForm,
+                options.audioMixing ? AVAudioSessionCategoryOptions.MixWithOthers : AVAudioSessionCategoryOptions.DuckOthers,
+                //@ts-ignore
+                null
+            );
+            audioSession.setActiveError(true);
+        }
+        this.delegate.doneCallback = () => {
+            if (needsAudioSession) {
+                audioSession.setActiveError(false);
+            }
+            options?.finishedCallback?.();
+        };
 
         // valid values for pitch are 0.5 to 2.0
         if (!isNumber(options.pitch)) {
@@ -72,7 +91,7 @@ export class TNSTextToSpeech {
 
         // valid values are AVSpeechUtteranceMinimumSpeechRate to AVSpeechUtteranceMaximumSpeechRate
         if (!isNumber(options.speakRate)) {
-            options.speakRate = AVSpeechUtteranceMaximumSpeechRate / 4.0; // default rate is way too fast
+            options.speakRate = AVSpeechUtteranceMaximumSpeechRate / 2.5; // default rate is way too fast
         } else if (options.speakRate < AVSpeechUtteranceMinimumSpeechRate) {
             options.speakRate = AVSpeechUtteranceMinimumSpeechRate;
         } else if (options.speakRate > AVSpeechUtteranceMaximumSpeechRate) {
@@ -88,12 +107,13 @@ export class TNSTextToSpeech {
 
         const speechUtterance = AVSpeechUtterance.alloc().initWithString(options.text);
 
-        if (isString(options.locale) && this.isValidLocale(options.locale)) {
-            speechUtterance.voice = AVSpeechSynthesisVoice.voiceWithLanguage(options.locale);
-        } else if (isString(options.language) && this.isValidLocale(options.language)) {
-            speechUtterance.voice = AVSpeechSynthesisVoice.voiceWithLanguage(options.language);
+        let localeStr = options.locale || options.language;
+        if (localeStr) {
+            if (localeStr.indexOf('-') === -1) {
+                localeStr = localeStr + '-' + localeStr.toUpperCase();
+            }
+            speechUtterance.voice = AVSpeechSynthesisVoice.voiceWithLanguage(localeStr);
         }
-
         speechUtterance.pitchMultiplier = options.pitch;
         speechUtterance.volume = options.volume;
         speechUtterance.rate = options.speakRate;

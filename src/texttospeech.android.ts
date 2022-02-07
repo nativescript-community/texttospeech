@@ -103,22 +103,11 @@ export class TNSTextToSpeech {
     }
 
     private speakText(options: SpeakOptions) {
-        if (this.isString(options.locale) && this.isValidLocale(options.locale)) {
-            const localeArray = options.locale.split('-');
-            const locale = new java.util.Locale(localeArray[0], localeArray[1]);
+        const localeStr = options.locale || options.language;
+        if (localeStr) {
+            const localeArray = localeStr.split('-');
+            const locale = new java.util.Locale(localeArray[0], localeArray[1] || localeStr.toUpperCase());
             this._tts.setLanguage(locale);
-        } else if (this.isString(options.language)) {
-            let locale = null;
-            if (this.isValidLocale(options.language)) {
-                // only for backwards compatbility with old API
-                const languageArray = options.language.split('-');
-                locale = new java.util.Locale(languageArray[0], languageArray[1]);
-            } else {
-                locale = new java.util.Locale(options.language);
-            }
-            if (locale) {
-                this._tts.setLanguage(locale);
-            }
         }
 
         if (!this.isBoolean(options.queue)) {
