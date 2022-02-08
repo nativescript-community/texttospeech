@@ -64,9 +64,9 @@ export class TNSTextToSpeech {
 
         if (needsAudioSession) {
             audioSession.setCategoryModeRouteSharingPolicyOptionsError(
-                options.sessionCategory || AVAudioSessionCategoryAmbient,
-                options.sessionMode || AVAudioSessionModeDefault,
-                options.sessionRouteSharingPolicy || AVAudioSessionRouteSharingPolicy.LongForm,
+                options.sessionCategory !== undefined ? options.sessionCategory : AVAudioSessionCategoryAmbient,
+                options.sessionMode !== undefined ? options.sessionMode : AVAudioSessionModeDefault,
+                options.sessionRouteSharingPolicy !== undefined ? options.sessionRouteSharingPolicy : AVAudioSessionRouteSharingPolicy.Default,
                 options.audioMixing ? AVAudioSessionCategoryOptions.MixWithOthers : AVAudioSessionCategoryOptions.DuckOthers,
                 //@ts-ignore
                 null
