@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.5](https://github.com/nativescript-community/texttospeech/compare/v3.0.4...v3.0.5) (2022-02-08)
+
+
+### Bug Fixes
+
+* **ios:** fix related to `sessionMode` ([1dabe18](https://github.com/nativescript-community/texttospeech/commit/1dabe188aa6d4ecc05e1b8d23cd624c3b24270bf))
+
+
+
+
+
 ## [3.0.4](https://github.com/nativescript-community/texttospeech/compare/v3.0.3...v3.0.4) (2022-02-07)
 
 
