@@ -158,7 +158,7 @@ export class TNSTextToSpeech {
             const result: Language[] = new Array<Language>();
             this.init().then(
                 () => {
-                    const languages = this._tts.getAvailableLanguages().toArray();
+                    const languages = this._tts.getAvailableLanguages().toArray() as java.util.Locale[];
                     for (let c = 0; c < languages.length; c++) {
                         const lang: Language = {
                             language: languages[c].getLanguage(),
