@@ -68,20 +68,19 @@ TTS.speak(speakOptions).then(
     -   `pitch?: number = 1.0`
     -   `speakRate?: number = 1.0`
     -   `volume?: number = 1.0`
-    -   `locale?: string = default system locale`
-    -   `language?: string = default system language` ** Android only **
+    -   `locale?: string = default system locale or language`
     -   `finishedCallback?: Function`
 
-If you wish to set a custom locale, you need to provide a valid BCP-47 code, e.g. `en-US`. If you wish to set only a custom language (without a preferred country code), you need to provide a valid ISO 639-1 language code. If both are set, the custom locale will be used.
+If you wish to set a custom locale, you need to provide a valid BCP-47 code, e.g. `en-US`. If you wish to set only a custom language (without a preferred country code), you need to provide a valid ISO 639-1 language code.
 
-The plugin checks whether the supplied locale/language code has the correct syntax but will not prevent setting a nonexistent codes. Please use this feature with caution.
+The plugin checks whether the supplied locale code has the correct syntax but will not prevent setting a nonexistent codes. Please use this feature with caution.
 
 Example with language code only:
 
 ```js
 const speakOptions: SpeakOptions = {
     text: 'Whatever you like', // *** required ***
-    language: 'en', // english language will be used
+    locale: 'en', // english language will be used
 };
 ```
 
