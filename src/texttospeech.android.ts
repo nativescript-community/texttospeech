@@ -41,7 +41,8 @@ export class TNSTextToSpeech {
                                 reject(new Error('TextToSpeech failed to init with code ' + status));
                             }
                         },
-                    })
+                    }),
+                    "com.google.android.tts"
                 );
             });
         }
