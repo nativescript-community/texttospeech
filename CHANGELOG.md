@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.6](https://github.com/nativescript-community/texttospeech/compare/v3.0.5...v3.0.6) (2022-05-18)
+
+
+### Features
+
+* **android:** init options to define audioattributes ([99528ba](https://github.com/nativescript-community/texttospeech/commit/99528bad42613cbac6ab7e17cfc9ac232215d2c1))
+
+
+
+
+
 ## [3.0.5](https://github.com/nativescript-community/texttospeech/compare/v3.0.4...v3.0.5) (2022-02-08)
 
 
