@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.7](https://github.com/nativescript-community/texttospeech/compare/v3.0.6...v3.0.7) (2022-05-18)
+
+
+### Bug Fixes
+
+* **android:** optional optiosn ([b0b7a73](https://github.com/nativescript-community/texttospeech/commit/b0b7a73f790380099d3ba73dbac18665b0d9a0e4))
+
+
+
+
+
 ## [3.0.6](https://github.com/nativescript-community/texttospeech/compare/v3.0.5...v3.0.6) (2022-05-18)
 
 
