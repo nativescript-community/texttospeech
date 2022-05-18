@@ -2,15 +2,15 @@ export interface InitOptions {
     /**
      * Android: AudioAttributes flags
      */
-    flags: number;
+    flags?: number;
     /**
      * Android: AudioAttributes contentType
      */
-    contentType: number;
+    contentType?: number;
     /**
      * Android: AudioAttributes usage
      */
-    usage: number;
+    usage?: number;
 }
 
 export declare class TNSTextToSpeech {
