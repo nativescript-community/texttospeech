@@ -1,5 +1,20 @@
+export interface InitOptions {
+    /**
+     * Android: AudioAttributes flags
+     */
+    flags: number;
+    /**
+     * Android: AudioAttributes contentType
+     */
+    contentType: number;
+    /**
+     * Android: AudioAttributes usage
+     */
+    usage: number;
+}
+
 export declare class TNSTextToSpeech {
-    init(): Promise<void>;
+    init(options?: InitOptions): Promise<void>;
 
     /**
      * Initiate the text to speech.

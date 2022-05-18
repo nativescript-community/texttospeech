@@ -1,5 +1,6 @@
-import { Application } from '@nativescript/core';
-import { Language, SpeakOptions } from './index';
+import { Application, Device } from '@nativescript/core';
+import { InitOptions, Language, SpeakOptions } from './index';
+const sdkVersion = parseInt(Device.sdkVersion, 10);
 
 @NativeClass
 class UtteranceProgressListener extends android.speech.tts.UtteranceProgressListener {
@@ -23,7 +24,7 @@ export class TNSTextToSpeech {
     private _lastOptions: SpeakOptions = null; // saves a reference to the last passed SpeakOptions for pause/resume/callback methods.
     private listener: UtteranceProgressListener;
 
-    private async init() {
+    private async init(options: InitOptions = {} as any) {
         if (!this._tts || !this._initialized) {
             return new Promise<void>((resolve, reject) => {
                 this._tts = new android.speech.tts.TextToSpeech(
@@ -36,7 +37,26 @@ export class TNSTextToSpeech {
                                 const listener = new UtteranceProgressListener();
                                 this.listener = listener;
                                 this._tts.setOnUtteranceProgressListener(listener);
-                                resolve();
+                                try {
+                                    const AudioAttributes = android.media.AudioAttributes;
+                                    const audioAttributes = new AudioAttributes.Builder();
+                                    if (options.usage !== undefined) {
+                                        audioAttributes.setUsage(options.usage);
+                                    }
+                                    if (options.contentType !== undefined) {
+                                        audioAttributes.setContentType(options.contentType);
+                                    }
+                                    if (options.flags !== undefined) {
+                                        audioAttributes.setFlags(options.flags);
+                                    }
+                                    // const audioAttributes = new AudioAttributes.Builder()
+                                    //     .setUsage(AudioAttributes.USAGE_VOICE_COMMUNICATION_SIGNALLING)
+                                    //     .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
+                                    //     .setFlags(AudioAttributes.FLAG_AUDIBILITY_ENFORCED);
+                                    this._tts.setAudioAttributes(audioAttributes.build());
+                                } catch (e) {
+                                    e.printStackTrace();
+                                }
                             } else {
                                 reject(new Error('TextToSpeech failed to init with code ' + status));
                             }
@@ -53,7 +73,7 @@ export class TNSTextToSpeech {
         }
         await this.init();
         let maxLen: number = 4000; // API level 18 added method for getting value dynamically
-        if (android.os.Build.VERSION.SDK_INT >= 18) {
+        if (sdkVersion >= 18) {
             try {
                 maxLen = android.speech.tts.TextToSpeech.getMaxSpeechInputLength();
             } catch (error) {
@@ -139,7 +159,7 @@ export class TNSTextToSpeech {
         this._tts.setSpeechRate(options.speakRate);
 
         const queueMode = options.queue ? android.speech.tts.TextToSpeech.QUEUE_ADD : android.speech.tts.TextToSpeech.QUEUE_FLUSH;
-        if (android.os.Build.VERSION.SDK_INT >= 21) {
+        if (sdkVersion >= 21) {
             // Hardcoded this value since the static field LOLLIPOP doesn't exist in Android 4.4
             /// >= Android API 21 - https://developer.android.com/reference/android/speech/tts/TextToSpeech.html#speak(java.lang.CharSequence, int, android.os.Bundle, java.lang.String)
             const params = new android.os.Bundle();
