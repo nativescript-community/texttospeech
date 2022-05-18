@@ -32,33 +32,35 @@ export class TNSTextToSpeech {
                     new android.speech.tts.TextToSpeech.OnInitListener({
                         onInit: (status) => {
                             // if the TextToSpeech was successful initializing
-                            if (status === android.speech.tts.TextToSpeech.SUCCESS) {
-                                this._initialized = true;
-                                const listener = new UtteranceProgressListener();
-                                this.listener = listener;
-                                this._tts.setOnUtteranceProgressListener(listener);
-                                try {
-                                    const AudioAttributes = android.media.AudioAttributes;
-                                    const audioAttributes = new AudioAttributes.Builder();
-                                    if (options.usage !== undefined) {
-                                        audioAttributes.setUsage(options.usage);
+                            try {
+                                if (status === android.speech.tts.TextToSpeech.SUCCESS) {
+                                    this._initialized = true;
+                                    const listener = new UtteranceProgressListener();
+                                    this.listener = listener;
+                                    this._tts.setOnUtteranceProgressListener(listener);
+                                    if (sdkVersion >= 21) {
+                                        const AudioAttributes = android.media.AudioAttributes;
+                                        const audioAttributes = new AudioAttributes.Builder();
+                                        if (options.usage !== undefined) {
+                                            audioAttributes.setUsage(options.usage);
+                                        }
+                                        if (options.contentType !== undefined) {
+                                            audioAttributes.setContentType(options.contentType);
+                                        }
+                                        if (options.flags !== undefined) {
+                                            audioAttributes.setFlags(options.flags);
+                                        }
+                                        // const audioAttributes = new AudioAttributes.Builder()
+                                        //     .setUsage(AudioAttributes.USAGE_VOICE_COMMUNICATION_SIGNALLING)
+                                        //     .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
+                                        //     .setFlags(AudioAttributes.FLAG_AUDIBILITY_ENFORCED);
+                                        this._tts.setAudioAttributes(audioAttributes.build());
                                     }
-                                    if (options.contentType !== undefined) {
-                                        audioAttributes.setContentType(options.contentType);
-                                    }
-                                    if (options.flags !== undefined) {
-                                        audioAttributes.setFlags(options.flags);
-                                    }
-                                    // const audioAttributes = new AudioAttributes.Builder()
-                                    //     .setUsage(AudioAttributes.USAGE_VOICE_COMMUNICATION_SIGNALLING)
-                                    //     .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
-                                    //     .setFlags(AudioAttributes.FLAG_AUDIBILITY_ENFORCED);
-                                    this._tts.setAudioAttributes(audioAttributes.build());
-                                } catch (e) {
-                                    e.printStackTrace();
+                                } else {
+                                    throw new Error('TextToSpeech failed to init with code ' + status);
                                 }
-                            } else {
-                                reject(new Error('TextToSpeech failed to init with code ' + status));
+                            } catch (e) {
+                                reject(e);
                             }
                         },
                     })
