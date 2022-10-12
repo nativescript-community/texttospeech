@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.1](https://github.com/nativescript-community/texttospeech/compare/v3.1.0...v3.1.1) (2022-10-12)
+
+
+### Bug Fixes
+
+* **ios:** throw error if no voice is found ([a0e9242](https://github.com/nativescript-community/texttospeech/commit/a0e924283978bf4439d458b179a5eb5ade4e28cd))
+
+
+
+
+
 # [3.1.0](https://github.com/nativescript-community/texttospeech/compare/v3.0.8...v3.1.0) (2022-05-18)
 
 
