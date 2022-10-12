@@ -112,7 +112,12 @@ export class TNSTextToSpeech {
             if (localeStr.indexOf('-') === -1) {
                 localeStr = localeStr + '-' + localeStr.toUpperCase();
             }
-            speechUtterance.voice = AVSpeechSynthesisVoice.voiceWithLanguage(localeStr);
+            const voice = AVSpeechSynthesisVoice.voiceWithLanguage(localeStr);
+            if (voice) {
+                speechUtterance.voice = voice;
+            } else if (!speechUtterance.voice) {
+                throw new Error(`no voice found for ${localeStr}`);
+            }
         }
         speechUtterance.pitchMultiplier = options.pitch;
         speechUtterance.volume = options.volume;
