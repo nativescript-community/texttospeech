@@ -63,7 +63,8 @@ export class TNSTextToSpeech {
                                 reject(e);
                             }
                         },
-                    })
+                    }),
+                    "com.google.android.tts"
                 );
             });
         }
