@@ -55,6 +55,7 @@ export class TNSTextToSpeech {
                                         //     .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
                                         //     .setFlags(AudioAttributes.FLAG_AUDIBILITY_ENFORCED);
                                         this._tts.setAudioAttributes(audioAttributes.build());
+                                        resolve();
                                     }
                                 } else {
                                     throw new Error('TextToSpeech failed to init with code ' + status);
