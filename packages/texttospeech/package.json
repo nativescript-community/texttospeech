@@ -15,6 +15,12 @@
         "iOS",
         "JavaScript"
     ],
+    "nativescript": {
+        "platforms": {
+            "android": "8.0.0",
+            "ios": "8.0.0"
+        }
+    },
     "author": "Anarchic Knight <anarchicknight@gmail.com> (http://www.anarchicknight.co.uk)",
     "license": "MIT",
     "bugs": {
