@@ -1,81 +1,59 @@
-# Windows image file caches
-Thumbs.db
-ehthumbs.db
+# NativeScript
+hooks/
+node_modules/
+demo*/platforms
 
-# Folder config file
-Desktop.ini
+# NativeScript Template
+*.js.map
+!ngcc.config.js
+!webpack.config.js
 
-# Recycle Bin used on file shares
-$RECYCLE.BIN/
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# Windows Installer files
-*.cab
-*.msi
-*.msm
-*.msp
-
-# Windows shortcuts
-*.lnk
-
-# =========================
-# Operating System Files
-# =========================
-
-# OSX
-# =========================
-
+# General
 .DS_Store
 .AppleDouble
 .LSOverride
 .idea
+.cloud
+.gradle
+.project
+.yarn
+.cxx
+tmp/
 
-# Thumbnails
-._*
+!.eslintrc.js
+!.prettierrc.js
 
-# Files that might appear on external disk
-.Spotlight-V100
-.Trashes
-
-# Directories potentially created on remote AFP share
-.AppleDB
-.AppleDesktop
-Network Trash Folder
-Temporary Items
-.apdisk
-
-bin
-obj
-build/
-.vs
-.tscache
-*.user
-!demo-vue/app/app.js
-*.map
-!gruntfile.js
-node_modules
-*.tmp.*
-demo*/platforms
-lib
-!webpack.*.js
-!build.esm.js
-report
-*.log
+!e2e/*.js
+!detox.config.js
+devices.js
 
 *.framework
-*.aar
-
+*.xcframework
+**/*.js.map
+src/**/*.js
+bin
+build
 Pods
-*.lock
-*.xcworkspace
-plugin/**/*.d.ts
-/plugin/README.md
-package-lock.json
-/.vscode
-/pnpm-lock.yaml
+/packages/**/*.aar
+/packages/**/*.framework
+/packages/**/*.xcframework
+/demo-snippets/**/*.aar
+*.xcuserdatad
+/packages/README.md
+packages/**/*js
+packages/**/*.d.ts
+packages/typings
+packages/**/angular
+packages/**/*.ngsummary.json
+packages/**/*.metadata.json
 
-.update_backup
-.migration_backup
-plugin/**/*js.map
-plugin/**/*js
-pnpm-lock.yaml
-hooks
+/blueprint.md
+
+*.tsbuildinfo

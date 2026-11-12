@@ -1,0 +1,32 @@
+{
+    "name": "@nativescript-community/texttospeech",
+    "version": "3.1.2",
+    "description": "A text to speech NativeScript plugin for Android and iOS",
+    "main": "index",
+    "typings": "index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nativescript-community/texttospeech.git"
+    },
+    "keywords": [
+        "NativeScript",
+        "Text To Speech",
+        "Android",
+        "iOS",
+        "JavaScript"
+    ],
+    "author": "Anarchic Knight <anarchicknight@gmail.com> (http://www.anarchicknight.co.uk)",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/nativescript-community/texttospeech/issues"
+    },
+    "homepage": "https://github.com/nativescript-community/texttospeech",
+    "readmeFilename": "README.md",
+    "scripts": {
+        "build": "npm run tsc && npm run readme",
+        "build.all": "npm run build",
+        "readme": "readme generate -c ../../tools/readme/blueprint.json",
+        "tsc": "cpy '**/*.d.ts' '../../packages/texttospeech' --parents --cwd=../../src/texttospeech && tsc  --build",
+        "clean": "bin/rimraf ./*.d.ts ./*.js ./*.js.map ./*.tsbuildinfo ./*.mjs ./*.mjs.map ./angular ./svelte ./vue* ./react"
+    }
+}

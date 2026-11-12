@@ -1,0 +1,9 @@
+{
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "rootDir": "../../src/texttospeech",
+        "outDir": "./"
+    },
+    "include": ["../../src/texttospeech/**/*", "../../references.d.ts", "../../tools/references.d.ts", "../../src/references.d.ts"],
+    "exclude": ["../../src/texttospeech/angular/**"]
+}
